@@ -1,9 +1,6 @@
-package com.generation.tucancha.model.enums;
+package com.generation.tucancha.model.entity;
 
-/**
- * Enum placeholder for RolUsuario.
- */
 public enum RolUsuario {
-    USER,
-    ADMIN
+    JUGADOR,
+    ADMINISTRADOR
 }

@@ -1,9 +1,8 @@
 package com.generation.tucancha.model.entity;
 
 import jakarta.persistence.*;
-
+import com.generation.tucancha.model.entity.RolUsuario;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
     @Table(name = "usuarios")
@@ -19,13 +18,9 @@ import java.util.List;
     private boolean estado;
     @Column(name = "fecha_registro", nullable = false, updatable = false)
     private LocalDateTime fechaRegistro = LocalDateTime.now();
-    @ManyToMany(fetch=FetchType.LAZY)
-    @JoinTable(
-    name = "usuario_rol",
-    joinColumns = @JoinColumn(name = "usuario_id"),
-    inverseJoinColumns = @JoinColumn(name = "rol_id")
-)
-private List<Rol> roles;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private RolUsuario rol;
 
     public Usuario() {
     }
@@ -37,12 +32,12 @@ private List<Rol> roles;
         setEstado(estado);
     }
 
-    public List<Rol> getRoles() {
-        return roles;
+    public RolUsuario getRol() {
+        return rol;
     }
 
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
+    public void setRol(RolUsuario rol) {
+        this.rol = rol;
     }
 
     public LocalDateTime getFechaRegistro() {
