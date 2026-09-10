@@ -1,7 +1,13 @@
 package com.generation.tucancha.dto.request;
 
-/**
- * DTO request placeholder for Reserva.
- */
+import jakarta.validation.constraints.NotNull;
+import lombok.Data;
+
+@Data
 public class ReservaRequest {
+    @NotNull(message = "El ID del usuario es obligatorio")
+    private Long usuarioId;
+
+    @NotNull(message = "El ID del horario es obligatorio")
+    private Long horarioId;
 }
