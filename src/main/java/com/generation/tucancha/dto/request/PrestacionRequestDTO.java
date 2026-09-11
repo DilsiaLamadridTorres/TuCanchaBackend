@@ -1,27 +1,15 @@
-package com.generation.tucancha.model.entity;
+package com.generation.tucancha.dto.request;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "prestaciones")
-public class Prestacion {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class PrestacionRequestDTO {
     private String nombre;
     private String descripcion;
 
-    public Prestacion ( ) {
+    public PrestacionRequestDTO ( ) {
     }
 
-    public Long getId ( ) {
-        return id;
-    }
-
-    public void setId (Long id) {
-        this.id = id;
+    public PrestacionRequestDTO (String nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public String getNombre ( ) {

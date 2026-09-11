@@ -1,25 +1,18 @@
-package com.generation.tucancha.dto.response;
+package com.generation.tucancha.dto.request;
 
+public class PrestacionRequest {
 
-public class PrestacionResponse {
-            private Long id;
         private String nombre;
-        private Long complejoId;
+     private Long complejoId;
 
-
-        public PrestacionResponse() {
+        public PrestacionRequest() {
         }
 
-        public PrestacionResponse(Long id, String nombre, Long complejoId) {
-            this.id = id;
+        public PrestacionRequest(String nombre, Long complejoId) {
             this.nombre = nombre;
             this.complejoId = complejoId;
         }
 
-
-        public Long getId() {
-            return id;
-        }
 
 
         public String getNombre() {
@@ -39,4 +32,3 @@ public class PrestacionResponse {
             this.complejoId = complejoId;
         }
     }
-
