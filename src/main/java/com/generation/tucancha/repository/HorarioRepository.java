@@ -104,4 +104,34 @@ public interface HorarioRepository
             @Param("horaInicio") LocalTime horaInicio,
             @Param("horaFin") LocalTime horaFin
     );
+
+    /* =========================================================
+   VALIDAR SOLAPAMIENTO AL ACTUALIZAR
+   ========================================================= */
+
+    /**
+     * Verifica si existe otro horario que se cruce
+     * con el horario que estamos actualizando.
+     *
+     * Se excluye el horario actual mediante su ID.
+     */
+    @Query("""
+        SELECT CASE
+            WHEN COUNT(h) > 0 THEN true
+            ELSE false
+        END
+        FROM Horario h
+        WHERE h.cancha = :cancha
+          AND h.fecha = :fecha
+          AND h.idHorario <> :idHorario
+          AND h.horaInicio < :horaFin
+          AND h.horaFin > :horaInicio
+        """)
+    boolean existeSolapamientoExcluyendoHorario(
+            @Param("cancha") Cancha cancha,
+            @Param("fecha") LocalDate fecha,
+            @Param("horaInicio") LocalTime horaInicio,
+            @Param("horaFin") LocalTime horaFin,
+            @Param("idHorario") Long idHorario
+    );
 }
