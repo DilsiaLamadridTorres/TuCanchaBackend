@@ -2,15 +2,17 @@ package com.generation.tucancha.service;
 
 import com.generation.tucancha.dto.request.PagoRequest;
 import com.generation.tucancha.dto.response.PagoResponse;
-import com.generation.tucancha.enums.EstadoPago;
-import com.generation.tucancha.enums.EstadoReserva;
-import com.generation.tucancha.exception.ResourceNotFoundException;
 import com.generation.tucancha.model.entity.Pago;
 import com.generation.tucancha.model.entity.Reserva;
+import com.generation.tucancha.model.enums.EstadoPago;
+import com.generation.tucancha.model.enums.EstadoReserva;
+import com.generation.tucancha.exception.ResourceNotFoundException;
 import com.generation.tucancha.repository.PagoRepository;
 import com.generation.tucancha.repository.ReservaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PagoService {
@@ -23,32 +25,39 @@ public class PagoService {
         this.reservaRepository = reservaRepository;
     }
 
-    @Transactional
-    public PagoResponse procesarPago(PagoRequest request) {
+    public List<PagoResponse> obtenerTodos() {
+        return pagoRepository.findAll().stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
+    public PagoResponse registrarPago(PagoRequest request) {
         Reserva reserva = reservaRepository.findById(request.getReservaId())
                 .orElseThrow(() -> new ResourceNotFoundException("Reserva no encontrada con ID: " + request.getReservaId()));
 
-        Pago pago = Pago.builder()
-                .reserva(reserva)
-                .metodoPago(request.getMetodoPago())
-                .monto(request.getMonto())
-                .estado(EstadoPago.APROBADO)
-                .build();
+        Pago pago = new Pago();
+        pago.setMonto(request.getMonto());
+        pago.setMetodoPago(request.getMetodoPago());
+        pago.setReserva(reserva);
 
+        // Simulación: Asignamos el estado del pago como EXITOSO y actualizamos la reserva
+        pago.setEstado(EstadoPago.EXITOSO);
         reserva.setEstado(EstadoReserva.CONFIRMADA);
-        reservaRepository.save(reserva);
 
-        return mapToResponse(pagoRepository.save(pago));
+        reservaRepository.save(reserva);
+        Pago guardado = pagoRepository.save(pago);
+
+        return mapToResponse(guardado);
     }
 
     private PagoResponse mapToResponse(Pago pago) {
-        PagoResponse response = new PagoResponse();
-        response.setIdPago(pago.getIdPago());
-        response.setReservaId(pago.getReserva().getIdReserva());
-        response.setMetodoPago(pago.getMetodoPago());
-        response.setMonto(pago.getMonto());
-        response.setEstado(pago.getEstado());
-        response.setFechaPago(pago.getFechaPago());
-        return response;
+        return new PagoResponse(
+                pago.getId(),
+                pago.getMonto(),
+                pago.getFechaPago(),
+                pago.getMetodoPago(),
+                pago.getEstado(),
+                pago.getReserva().getId()
+        );
     }
 }

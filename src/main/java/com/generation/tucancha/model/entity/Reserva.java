@@ -1,43 +1,56 @@
 package com.generation.tucancha.model.entity;
 
-import com.generation.tucancha.enums.EstadoReserva;
+import com.generation.tucancha.model.enums.EstadoReserva;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "reservas")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_reserva")
-    private Long idReserva;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario; // Conexión con Sebastián
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "horario_id", nullable = false)
-    private Horario horario; // Conexión con Miguel
-
-    @Column(name = "fecha_creacion", nullable = false, updatable = false)
-    private LocalDateTime fechaCreacion;
+    @Column(nullable = false)
+    private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoReserva estado;
 
-    @PrePersist
-    protected void onCreate() {
+    @NotNull(message = "El usuario es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
+    @NotNull(message = "El horario es obligatorio")
+    @ManyToOne
+    @JoinColumn(name = "horario_id", nullable = false)
+    private Horario horario;
+
+    public Reserva() {}
+
+    public Reserva(Usuario usuario, Horario horario, EstadoReserva estado) {
+        this.usuario = usuario;
+        this.horario = horario;
+        this.estado = estado;
         this.fechaCreacion = LocalDateTime.now();
-        if (this.estado == null) {
-            this.estado = EstadoReserva.PENDIENTE;
-        }
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public LocalDateTime getFechaCreacion() { return fechaCreacion; }
+    public void setFechaCreacion(LocalDateTime fechaCreacion) { this.fechaCreacion = fechaCreacion; }
+
+    public EstadoReserva getEstado() { return estado; }
+    public void setEstado(EstadoReserva estado) { this.estado = estado; }
+
+    public Usuario getUsuario() { return usuario; }
+    public void setUsuario(Usuario usuario) { this.usuario = usuario; }
+
+    public Horario getHorario() { return horario; }
+    public void setHorario(Horario horario) { this.horario = horario; }
 }

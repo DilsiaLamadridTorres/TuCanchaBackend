@@ -1,44 +1,66 @@
 package com.generation.tucancha.model.entity;
-
-import com.generation.tucancha.enums.EstadoPago;
-import com.generation.tucancha.enums.MetodoPago;
+import com.generation.tucancha.model.enums.EstadoPago;
+import com.generation.tucancha.model.enums.MetodoPago;
 import jakarta.persistence.*;
-import lombok.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "pagos")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_pago")
-    private Long idPago;
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "reserva_id", nullable = false)
-    private Reserva reserva;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "metodo_pago", nullable = false)
-    private MetodoPago metodoPago;
+    @NotNull(message = "El monto es obligatorio")
+    @Positive(message = "El monto debe ser un valor positivo")
+    @Column(nullable = false)
+    private BigDecimal monto;
 
     @Column(nullable = false)
-    private Double monto;
+    private LocalDateTime fechaPago = LocalDateTime.now();
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MetodoPago metodoPago;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EstadoPago estado;
 
-    @Column(name = "fecha_pago", nullable = false)
-    private LocalDateTime fechaPago;
+    @NotNull(message = "La reserva asociada es obligatoria")
+    @ManyToOne
+    @JoinColumn(name = "reserva_id", nullable = false)
+    private Reserva reserva;
 
-    @PrePersist
-    protected void onCreate() {
+    public Pago() {}
+
+    public Pago(BigDecimal monto, MetodoPago metodoPago, EstadoPago estado, Reserva reserva) {
+        this.monto = monto;
+        this.metodoPago = metodoPago;
+        this.estado = estado;
+        this.reserva = reserva;
         this.fechaPago = LocalDateTime.now();
     }
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public BigDecimal getMonto() { return monto; }
+    public void setMonto(BigDecimal monto) { this.monto = monto; }
+
+    public LocalDateTime getFechaPago() { return fechaPago; }
+    public void setFechaPago(LocalDateTime fechaPago) { this.fechaPago = fechaPago; }
+
+    public MetodoPago getMetodoPago() { return metodoPago; }
+    public void setMetodoPago(MetodoPago metodoPago) { this.metodoPago = metodoPago; }
+
+    public EstadoPago getEstado() { return estado; }
+    public void setEstado(EstadoPago estado) { this.estado = estado; }
+
+    public Reserva getReserva() { return reserva; }
+    public void setReserva(Reserva reserva) { this.reserva = reserva; }
 }

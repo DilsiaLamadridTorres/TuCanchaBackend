@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/reservas")
+@RequestMapping("/api/reservas")
+@CrossOrigin(origins = "*")
 public class ReservaController {
 
     private final ReservaService reservaService;
@@ -20,18 +21,18 @@ public class ReservaController {
         this.reservaService = reservaService;
     }
 
-    @PostMapping
-    public ResponseEntity<ReservaResponse> crear(@Valid @RequestBody ReservaRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(reservaService.crearReserva(request));
-    }
-
     @GetMapping
-    public ResponseEntity<List<ReservaResponse>> listarTodas() {
+    public ResponseEntity<List<ReservaResponse>> obtenerTodas() {
         return ResponseEntity.ok(reservaService.obtenerTodas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaResponse> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<ReservaResponse> obtenerPorId(@PathVariable Long id) {
         return ResponseEntity.ok(reservaService.obtenerPorId(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<ReservaResponse> crearReserva(@Valid @RequestBody ReservaRequest request) {
+        return new ResponseEntity<>(reservaService.crearReserva(request), HttpStatus.CREATED);
     }
 }

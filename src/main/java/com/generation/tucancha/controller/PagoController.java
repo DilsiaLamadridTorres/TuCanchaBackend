@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("/api/v1/pagos")
+@RequestMapping("/api/pagos")
+@CrossOrigin(origins = "*")
 public class PagoController {
 
     private final PagoService pagoService;
@@ -18,8 +21,13 @@ public class PagoController {
         this.pagoService = pagoService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<PagoResponse>> obtenerTodos() {
+        return ResponseEntity.ok(pagoService.obtenerTodos());
+    }
+
     @PostMapping
-    public ResponseEntity<PagoResponse> procesarPago(@Valid @RequestBody PagoRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(pagoService.procesarPago(request));
+    public ResponseEntity<PagoResponse> registrarPago(@Valid @RequestBody PagoRequest request) {
+        return new ResponseEntity<>(pagoService.registrarPago(request), HttpStatus.CREATED);
     }
 }
