@@ -23,6 +23,16 @@ public class Solicitud {
     @Column(name = "usuario_id", nullable = false)
     private Long usuarioId;
 
+    public Solicitud ( ) {
+    }
+
+    public Solicitud (Long id, LocalDateTime fechaCreacion, EstadoSolicitud estado, Long usuarioId) {
+        this.id = id;
+        this.fechaCreacion = fechaCreacion;
+        this.estado = estado;
+        this.usuarioId = usuarioId;
+    }
+
     @PrePersist
     protected void onCreate ( ) {
         this.fechaCreacion = LocalDateTime.now();
@@ -31,5 +41,36 @@ public class Solicitud {
         }
     }
 
-    // Getters y Setters...
+    // Getters y Setters
+    public Long getId ( ) {
+        return id;
+    }
+
+    public void setId (Long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getFechaCreacion ( ) {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion (LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public EstadoSolicitud getEstado ( ) {
+        return estado;
+    }
+
+    public void setEstado (EstadoSolicitud estado) {
+        this.estado = estado;
+    }
+
+    public Long getUsuarioId ( ) {
+        return usuarioId;
+    }
+
+    public void setUsuarioId (Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
 }

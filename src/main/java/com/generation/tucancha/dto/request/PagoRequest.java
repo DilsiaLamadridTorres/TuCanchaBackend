@@ -1,27 +1,38 @@
 package com.generation.tucancha.dto.request;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
+import com.generation.tucancha.model.enums.MetodoPago;
+
 import java.math.BigDecimal;
 
-public class PagoRequest<EstadoPago> {
-
-    @NotNull(message = "El ID de reserva es obligatorio")
+public class PagoRequest {
+    private BigDecimal monto;
+    private MetodoPago metodoPago;
     private Long reservaId;
 
-    @NotNull(message = "El monto es obligatorio")
-    @Positive(message = "El monto debe ser un valor positivo")
-    private BigDecimal monto;
+    public PagoRequest ( ) {
+    }
 
-    @NotNull(message = "El estado de pago es obligatorio")
-    private EstadoPago estadoPago;
+    public BigDecimal getMonto ( ) {
+        return monto;
+    }
 
-    public Long getReservaId() { return reservaId; }
-    public void setReservaId(Long reservaId) { this.reservaId = reservaId; }
+    public void setMonto (BigDecimal monto) {
+        this.monto = monto;
+    }
 
-    public BigDecimal getMonto() { return monto; }
-    public void setMonto(BigDecimal monto) { this.monto = monto; }
+    public MetodoPago getMetodoPago ( ) {
+        return metodoPago;
+    }
 
-    public EstadoPago getEstadoPago() { return estadoPago; }
-    public void setEstadoPago(EstadoPago estadoPago) { this.estadoPago = estadoPago; }
+    public void setMetodoPago (MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
+    }
+
+    public Long getReservaId ( ) {
+        return reservaId;
+    }
+
+    public void setReservaId (Long reservaId) {
+        this.reservaId = reservaId;
+    }
 }
