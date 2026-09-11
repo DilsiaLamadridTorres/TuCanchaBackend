@@ -50,9 +50,9 @@ http://localhost:8080
 - Pagos y estados
 - Solicitudes y titularidad de complejos
 
-## Integrantes
-Dilsia Lamadrid
-Paula Rodriguez
-Miguel Ospina
-Jonathan Paul
-Sebastian Rincon
+## Integrantes grupo 8
+- Dilsia Lamadrid
+- Paula Rodriguez
+- Miguel Ospina
+- Jonathan Paul
+- Sebastian Rincon
