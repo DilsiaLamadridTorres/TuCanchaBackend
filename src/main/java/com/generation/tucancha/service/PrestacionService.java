@@ -1,116 +1,65 @@
 package com.generation.tucancha.service;
 
-import com.generation.tucancha.dto.request.PrestacionRequest;
-import com.generation.tucancha.dto.response.PrestacionResponse;
-import com.generation.tucancha.model.entity.Complejo;
+import com.generation.tucancha.dto.request.PrestacionRequestDTO;
+import com.generation.tucancha.dto.response.PrestacionResponseDTO;
 import com.generation.tucancha.model.entity.Prestacion;
-import com.generation.tucancha.repository.ComplejoRepository;
 import com.generation.tucancha.repository.PrestacionRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PrestacionService {
 
     private final PrestacionRepository prestacionRepository;
-    private final ComplejoRepository complejoRepository;
 
-    public PrestacionService(
-            PrestacionRepository prestacionRepository,
-            ComplejoRepository complejoRepository
-    ) {
+    public PrestacionService(PrestacionRepository prestacionRepository) {
         this.prestacionRepository = prestacionRepository;
-        this.complejoRepository = complejoRepository;
     }
 
-
-    public PrestacionResponse crear(PrestacionRequest request) {
-
-        Complejo complejo = complejoRepository
-                .findById(request.getComplejoId())
-                .orElseThrow(() ->
-                        new RuntimeException("Complejo no encontrado")
-                );
-
-        Prestacion prestacion = new Prestacion(
-                request.getNombre(),
-                complejo
-        );
-
-        Prestacion prestacionGuardada =
-                prestacionRepository.save(prestacion);
-
-        return convertirAResponse(prestacionGuardada);
+    @Transactional(readOnly = true)
+    public List<PrestacionResponseDTO> obtenerTodas() {
+        return prestacionRepository.findAll().stream()
+                .map(this::convertirAResponseDTO)
+                .collect(Collectors.toList());
     }
 
-
-    public List<PrestacionResponse> obtenerTodos() {
-
-        return prestacionRepository.findAll()
-                .stream()
-                .map(this::convertirAResponse)
-                .toList();
+    @Transactional(readOnly = true)
+    public PrestacionResponseDTO obtenerPorId(Long id) {
+        Prestacion prestacion = prestacionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Prestación no encontrada con id: " + id));
+        return convertirAResponseDTO(prestacion);
     }
 
-    public PrestacionResponse obtenerPorId(Long id) {
+    @Transactional
+    public PrestacionResponseDTO crear(PrestacionRequestDTO request) {
+        if (prestacionRepository.existsByNombre(request.getNombre())) {
+            throw new IllegalArgumentException("Ya existe una prestación con el nombre: " + request.getNombre());
+        }
 
-        Prestacion prestacion = prestacionRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Prestación no encontrada")
-                );
-
-        return convertirAResponse(prestacion);
-    }
-
-    public PrestacionResponse actualizar(
-            Long id,
-            PrestacionRequest request
-    ) {
-
-        Prestacion prestacion = prestacionRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Prestación no encontrada")
-                );
-
-        Complejo complejo = complejoRepository
-                .findById(request.getComplejoId())
-                .orElseThrow(() ->
-                        new RuntimeException("Complejo no encontrado")
-                );
-
+        Prestacion prestacion = new Prestacion();
         prestacion.setNombre(request.getNombre());
-        prestacion.setComplejo(complejo);
+        prestacion.setDescripcion(request.getDescripcion());
 
-        Prestacion prestacionActualizada =
-                prestacionRepository.save(prestacion);
-
-        return convertirAResponse(prestacionActualizada);
+        Prestacion guardada = prestacionRepository.save(prestacion);
+        return convertirAResponseDTO(guardada);
     }
 
+    @Transactional
     public void eliminar(Long id) {
-
-        Prestacion prestacion = prestacionRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException("Prestación no encontrada")
-                );
-
-        prestacionRepository.delete(prestacion);
+        if (!prestacionRepository.existsById(id)) {
+            throw new RuntimeException("No se encontró la prestación a eliminar");
+        }
+        prestacionRepository.deleteById(id);
     }
 
-
-    private PrestacionResponse convertirAResponse(
-            Prestacion prestacion
-    ) {
-
-        return new PrestacionResponse(
+    private PrestacionResponseDTO convertirAResponseDTO(Prestacion prestacion) {
+        return new PrestacionResponseDTO(
                 prestacion.getId(),
                 prestacion.getNombre(),
-                prestacion.getComplejo().getId()
+                prestacion.getDescripcion()
         );
     }
-
 }

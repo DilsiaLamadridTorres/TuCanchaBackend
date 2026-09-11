@@ -3,7 +3,7 @@ package com.generation.tucancha.service;
 import com.generation.tucancha.dto.request.UsuarioRequest;
 import com.generation.tucancha.dto.response.UsuarioResponse;
 import com.generation.tucancha.dto.resumen.UsuarioResumenDTO;
-import com.generation.tucancha.model.entity.RolUsuario;
+import com.generation.tucancha.model.enums.RolUsuario;
 import com.generation.tucancha.model.entity.Usuario;
 import com.generation.tucancha.repository.UsuarioRepository;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

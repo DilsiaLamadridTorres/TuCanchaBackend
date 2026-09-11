@@ -1,4 +1,7 @@
 package com.generation.tucancha.repository;
 
-public interface HorarioRepository {
+import com.generation.tucancha.model.entity.Horario;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface HorarioRepository extends JpaRepository<Horario, Long> {
 }

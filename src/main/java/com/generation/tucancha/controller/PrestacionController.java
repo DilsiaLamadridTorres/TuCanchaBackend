@@ -1,15 +1,18 @@
 package com.generation.tucancha.controller;
 
-import com.generation.tucancha.dto.request.PrestacionRequest;
-import com.generation.tucancha.dto.response.PrestacionResponse;
+import com.generation.tucancha.dto.request.PrestacionRequestDTO;
+import com.generation.tucancha.dto.response.PrestacionResponseDTO;
+import com.generation.tucancha.model.entity.Prestacion;
 import com.generation.tucancha.service.PrestacionService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/prestaciones")
+@RequestMapping("/api/prestaciones")
 public class PrestacionController {
 
     private final PrestacionService prestacionService;
@@ -18,39 +21,27 @@ public class PrestacionController {
         this.prestacionService = prestacionService;
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public PrestacionResponse crear(
-            @RequestBody PrestacionRequest request
-    ) {
-        return prestacionService.crear(request);
-    }
-
     @GetMapping
-    public List<PrestacionResponse> obtenerTodos() {
-        return prestacionService.obtenerTodos();
+    public ResponseEntity<List<PrestacionResponseDTO>> obtenerTodas() {
+        List<PrestacionResponseDTO> prestaciones = prestacionService.obtenerTodas();
+        return ResponseEntity.ok(prestaciones);
     }
 
     @GetMapping("/{id}")
-    public PrestacionResponse obtenerPorId(
-            @PathVariable Long id
-    ) {
-        return prestacionService.obtenerPorId(id);
+    public ResponseEntity<PrestacionResponseDTO> obtenerPorId(@PathVariable Long id) {
+        PrestacionResponseDTO prestacion = prestacionService.obtenerPorId(id);
+        return ResponseEntity.ok(prestacion);
     }
 
-    @PutMapping("/{id}")
-    public PrestacionResponse actualizar(
-            @PathVariable Long id,
-            @RequestBody PrestacionRequest request
-    ) {
-        return prestacionService.actualizar(id, request);
+    @PostMapping
+    public ResponseEntity<PrestacionResponseDTO> crear(@RequestBody PrestacionRequestDTO request) {
+        PrestacionResponseDTO nueva = prestacionService.crear(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(nueva);
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
         prestacionService.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
 }

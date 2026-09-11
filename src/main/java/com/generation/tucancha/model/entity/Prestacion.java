@@ -2,54 +2,31 @@ package com.generation.tucancha.model.entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "prestaciones")
 public class Prestacion {
 
+    // Relación bidireccional o unidireccional con Complejo (Módulo de Dilsia)
+    @ManyToMany(mappedBy = "prestaciones")
+    private final Set<Complejo> complejos = new HashSet<>();
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_prestaciones")
     private Long id;
-
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String nombre;
+    @Column(length = 255)
+    private String descripcion;
 
-    // Relación con Complejo
-    // Muchas prestaciones pertenecen a un Complejo
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "complejo_id", nullable = false)
-    private Complejo complejo;
-
-
-      public Prestacion() {
+    public Prestacion ( ) {
     }
 
-    public Prestacion(String nombre, Complejo complejo) {
+    public Prestacion (String nombre, String descripcion) {
         this.nombre = nombre;
-        this.complejo = complejo;
+        this.descripcion = descripcion;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-
-    public Complejo getComplejo() {
-        return complejo;
-    }
-
-    public void setComplejo(Complejo complejo) {
-        this.complejo = complejo;
-    }
+    // Getters y Setters...
 }
