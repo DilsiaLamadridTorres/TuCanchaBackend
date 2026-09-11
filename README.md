@@ -27,7 +27,7 @@ Ajusta la conexión a la base de datos en `src/main/resources/application.proper
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/tucancha
 spring.datasource.username=postgres
-spring.datasource.password=tu_password
+spring.datasource.password=
 ```
 
 ## Ejecución
@@ -49,3 +49,10 @@ http://localhost:8080
 - Horarios y reservas
 - Pagos y estados
 - Solicitudes y titularidad de complejos
+
+## Integrantes
+Dilsia Lamadrid
+Paula Rodriguez
+Miguel Ospina
+Jonathan Paul
+Sebastian Rincon
