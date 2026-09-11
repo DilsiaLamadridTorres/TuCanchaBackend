@@ -1,5 +1,6 @@
 package com.generation.tucancha.model.entity;
 
+import com.generation.tucancha.model.enums.EstadoCancha;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -8,74 +9,178 @@ import java.math.BigDecimal;
 @Table(name = "canchas")
 public class Cancha {
 
+    /* =========================================================
+       ID
+       ========================================================= */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_cancha")
+    private Long idCancha;
 
-    @Column(nullable = false, length = 100)
+
+    /* =========================================================
+       RELACIÓN CON COMPLEJO
+
+       Un complejo puede tener muchas canchas.
+       Una cancha pertenece a un solo complejo.
+       ========================================================= */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+            name = "id_complejo",
+            nullable = false
+    )
+    private Complejo complejo;
+
+
+    /* =========================================================
+       INFORMACIÓN DE LA CANCHA
+       ========================================================= */
+
+    @Column(
+            name = "nombre",
+            nullable = false,
+            length = 100
+    )
     private String nombre;
 
-    private String descripcion;
 
-    @Column(name = "precio_por_hora", nullable = false)
-    private BigDecimal precioPorHora;
+    @Column(
+            name = "deporte",
+            nullable = false,
+            length = 50
+    )
+    private String deporte;
 
-    @Column(nullable = false)
-    private boolean disponible = true;
 
-    public Cancha ( ) {
+    @Column(
+            name = "tipo_piso",
+            length = 50
+    )
+    private String tipoPiso;
+
+
+    @Column(
+            name = "largo",
+            precision = 8,
+            scale = 2
+    )
+    private BigDecimal largo;
+
+
+    @Column(
+            name = "ancho",
+            precision = 8,
+            scale = 2
+    )
+    private BigDecimal ancho;
+
+
+    @Column(
+            name = "precio_hora",
+            nullable = false,
+            precision = 12,
+            scale = 2
+    )
+    private BigDecimal precioHora;
+
+
+    @Column(
+            name = "duracion_minutos",
+            nullable = false
+    )
+    private Integer duracionMinutos;
+
+
+    @Column(
+            name = "techada",
+            nullable = false
+    )
+    private Boolean techada;
+
+
+    @Column(
+            name = "otros_deportes",
+            length = 255
+    )
+    private String otrosDeportes;
+
+
+    /* =========================================================
+       ESTADO DE LA CANCHA
+       ========================================================= */
+
+    @Enumerated(EnumType.STRING)
+    @Column(
+            name = "estado",
+            nullable = false,
+            length = 20
+    )
+    private EstadoCancha estado;
+
+
+    /* =========================================================
+       CONSTRUCTOR VACÍO
+       Requerido por JPA
+       ========================================================= */
+
+    public Cancha() {
     }
 
-    public Cancha (Long id, String nombre, String descripcion, BigDecimal precioPorHora, boolean disponible) {
-        this.id = id;
+
+    /* =========================================================
+       CONSTRUCTOR COMPLETO
+       ========================================================= */
+
+    public Cancha(
+            Long idCancha,
+            Complejo complejo,
+            String nombre,
+            String deporte,
+            String tipoPiso,
+            BigDecimal largo,
+            BigDecimal ancho,
+            BigDecimal precioHora,
+            Integer duracionMinutos,
+            Boolean techada,
+            String otrosDeportes,
+            EstadoCancha estado
+    ) {
+        this.idCancha = idCancha;
+        this.complejo = complejo;
         this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precioPorHora = precioPorHora;
-        this.disponible = disponible;
+        this.deporte = deporte;
+        this.tipoPiso = tipoPiso;
+        this.largo = largo;
+        this.ancho = ancho;
+        this.precioHora = precioHora;
+        this.duracionMinutos = duracionMinutos;
+        this.techada = techada;
+        this.otrosDeportes = otrosDeportes;
+        this.estado = estado;
     }
 
-    // Getters y Setters
-    public Long getId ( ) {
-        return id;
+
+    /* =========================================================
+       GETTERS Y SETTERS
+       ========================================================= */
+
+    public Long getIdCancha() {
+        return idCancha;
     }
 
-    public void setId (Long id) {
-        this.id = id;
+    public void setIdCancha(Long idCancha) {
+        this.idCancha = idCancha;
     }
 
-    public String getNombre ( ) {
-        return nombre;
+    public Complejo getComplejo() {
+        return complejo;
     }
 
-    public void setNombre (String nombre) {
-        this.nombre = nombre;
+    public void setComplejo(Complejo complejo) {
+        this.complejo = complejo;
     }
-
-    public String getDescripcion ( ) {
-        return descripcion;
-    }
-
-    public void setDescripcion (String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public BigDecimal getPrecioPorHora ( ) {
-        return precioPorHora;
-    }
-
-    public void setPrecioPorHora (BigDecimal precioPorHora) {
-        this.precioPorHora = precioPorHora;
-    }
-
-    public boolean isDisponible ( ) {
-        return disponible;
-    }
-
-    public void setDisponible (boolean disponible) {
-        this.disponible = disponible;
-    }
-}
-
 
     public String getNombre() {
         return nombre;
@@ -85,7 +190,6 @@ public class Cancha {
         this.nombre = nombre;
     }
 
-
     public String getDeporte() {
         return deporte;
     }
@@ -93,7 +197,6 @@ public class Cancha {
     public void setDeporte(String deporte) {
         this.deporte = deporte;
     }
-
 
     public String getTipoPiso() {
         return tipoPiso;
@@ -103,7 +206,6 @@ public class Cancha {
         this.tipoPiso = tipoPiso;
     }
 
-
     public BigDecimal getLargo() {
         return largo;
     }
@@ -111,7 +213,6 @@ public class Cancha {
     public void setLargo(BigDecimal largo) {
         this.largo = largo;
     }
-
 
     public BigDecimal getAncho() {
         return ancho;
@@ -121,7 +222,6 @@ public class Cancha {
         this.ancho = ancho;
     }
 
-
     public BigDecimal getPrecioHora() {
         return precioHora;
     }
@@ -129,7 +229,6 @@ public class Cancha {
     public void setPrecioHora(BigDecimal precioHora) {
         this.precioHora = precioHora;
     }
-
 
     public Integer getDuracionMinutos() {
         return duracionMinutos;
@@ -139,7 +238,6 @@ public class Cancha {
         this.duracionMinutos = duracionMinutos;
     }
 
-
     public Boolean getTechada() {
         return techada;
     }
@@ -148,7 +246,6 @@ public class Cancha {
         this.techada = techada;
     }
 
-
     public String getOtrosDeportes() {
         return otrosDeportes;
     }
@@ -156,7 +253,6 @@ public class Cancha {
     public void setOtrosDeportes(String otrosDeportes) {
         this.otrosDeportes = otrosDeportes;
     }
-
 
     public EstadoCancha getEstado() {
         return estado;
