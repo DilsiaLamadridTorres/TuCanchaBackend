@@ -1,0 +1,96 @@
+{
+  "info": {
+    "name": "TuCancha API - Postman Collection",
+    "_postman_id": "tucancha-collection",
+    "description": "Collection with endpoints and example bodies for TuCancha backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Reservas",
+      "item": [
+        {"name":"Listar reservas","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/reservas","host":["{{base_url}}"],"path":["api","reservas"]}}},
+        {"name":"Obtener reserva por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/reservas/:id","host":["{{base_url}}"],"path":["api","reservas",":id"]}}},
+        {"name":"Crear reserva","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"usuarioId\": 1,\n  \"horarioId\": 2\n}"},"url":{"raw":"{{base_url}}/api/reservas","host":["{{base_url}}"],"path":["api","reservas"]}}}
+      ]
+    },
+    {
+      "name": "TitularesComplejo",
+      "item": [
+        {"name":"Crear titular","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"Perez\",\n  \"cedula\": \"1234567890\",\n  \"correo\": \"ana@example.com\",\n  \"telefono\": \"0999999999\",\n  \"fechaRegistro\": \"2026-09-15\"\n}"},"url":{"raw":"{{base_url}}/titulares","host":["{{base_url}}"],"path":["titulares"]}}},
+        {"name":"Listar titulares","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/titulares","host":["{{base_url}}"],"path":["titulares"]}}},
+        {"name":"Obtener titular por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/titulares/:id","host":["{{base_url}}"],"path":["titulares",":id"]}}},
+        {"name":"Actualizar titular","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombre\": \"Ana\",\n  \"apellido\": \"P\",\n  \"cedula\": \"1234567890\",\n  \"correo\": \"ana@example.com\",\n  \"telefono\": \"0999999999\",\n  \"fechaRegistro\": \"2026-09-15\"\n}"},"url":{"raw":"{{base_url}}/titulares/:id","host":["{{base_url}}"],"path":["titulares",":id"]}}},
+        {"name":"Eliminar titular","request":{"method":"DELETE","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/titulares/:id","host":["{{base_url}}"],"path":["titulares",":id"]}}}
+      ]
+    },
+    {
+      "name": "Complejos",
+      "item": [
+        {"name":"Crear complejo","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombreComplejo\": \"MiComplejo\",\n  \"nit\": \"1234\",\n  \"provincia\": \"Pichincha\",\n  \"ciudad\": \"Quito\",\n  \"direccion\": \"Av. Siempre Viva 123\",\n  \"titularComplejoId\": 1\n}"},"url":{"raw":"{{base_url}}/complejos","host":["{{base_url}}"],"path":["complejos"]}}},
+        {"name":"Listar complejos","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/complejos","host":["{{base_url}}"],"path":["complejos"]}}},
+        {"name":"Obtener complejo por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/complejos/:id","host":["{{base_url}}"],"path":["complejos",":id"]}}},
+        {"name":"Actualizar complejo","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombreComplejo\": \"MiComplejoMod\",\n  \"nit\": \"1234\",\n  \"provincia\": \"Pichincha\",\n  \"ciudad\": \"Quito\",\n  \"direccion\": \"Av. Nueva 1\",\n  \"titularComplejoId\": 1\n}"},"url":{"raw":"{{base_url}}/complejos/:id","host":["{{base_url}}"],"path":["complejos",":id"]}}},
+        {"name":"Eliminar complejo","request":{"method":"DELETE","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/complejos/:id","host":["{{base_url}}"],"path":["complejos",":id"]}}}
+      ]
+    },
+    {
+      "name": "Usuarios",
+      "item": [
+        {"name":"Listar usuarios","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/usuarios","host":["{{base_url}}"],"path":["api","usuarios"]}}},
+        {"name":"Obtener usuario por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/usuarios/:id","host":["{{base_url}}"],"path":["api","usuarios",":id"]}}},
+        {"name":"Crear usuario","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombre\": \"Juan\",\n  \"cedula\": \"001\",\n  \"correo\": \"juan@example.com\",\n  \"password\": \"pwd123\",\n  \"rol\": \"CLIENTE\"\n}"},"url":{"raw":"{{base_url}}/api/usuarios","host":["{{base_url}}"],"path":["api","usuarios"]}}},
+        {"name":"Eliminar usuario","request":{"method":"DELETE","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/usuarios/:id","host":["{{base_url}}"],"path":["api","usuarios",":id"]}}}
+      ]
+    },
+    {
+      "name": "Roles",
+      "item": [
+        {"name":"Listar roles","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/roles","host":["{{base_url}}"],"path":["api","roles"]}}},
+        {"name":"Obtener rol por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/roles/:id","host":["{{base_url}}"],"path":["api","roles",":id"]}}},
+        {"name":"Crear rol","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombre\": \"ADMIN\"\n}"},"url":{"raw":"{{base_url}}/api/roles","host":["{{base_url}}"],"path":["api","roles"]}}}
+      ]
+    },
+    {
+      "name": "Prestaciones",
+      "item": [
+        {"name":"Listar prestaciones","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/prestaciones","host":["{{base_url}}"],"path":["api","prestaciones"]}}},
+        {"name":"Obtener prestacion por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/prestaciones/:id","host":["{{base_url}}"],"path":["api","prestaciones",":id"]}}},
+        {"name":"Crear prestacion","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nombre\": \"Luz\",\n  \"descripcion\": \"Iluminacion nocturna\"\n}"},"url":{"raw":"{{base_url}}/api/prestaciones","host":["{{base_url}}"],"path":["api","prestaciones"]}}},
+        {"name":"Eliminar prestacion","request":{"method":"DELETE","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/prestaciones/:id","host":["{{base_url}}"],"path":["api","prestaciones",":id"]}}}
+      ]
+    },
+    {
+      "name": "Solicitudes",
+      "item": [
+        {"name":"Listar solicitudes","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/solicitudes","host":["{{base_url}}"],"path":["api","solicitudes"]}}},
+        {"name":"Listar solicitudes por estado","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/solicitudes/estado/PENDIENTE","host":["{{base_url}}"],"path":["api","solicitudes","estado","PENDIENTE"]}}},
+        {"name":"Crear solicitud","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"usuarioId\": 1\n}"},"url":{"raw":"{{base_url}}/api/solicitudes","host":["{{base_url}}"],"path":["api","solicitudes"]}}}
+      ]
+    },
+    {
+      "name": "Solicitudes-Cancha",
+      "item": [
+        {"name":"Crear solicitud cancha","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"solicitudId\": 1,\n  \"canchaId\": 2\n}"},"url":{"raw":"{{base_url}}/solicitudes-cancha","host":["{{base_url}}"],"path":["solicitudes-cancha"]}}},
+        {"name":"Listar solicitudes cancha","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/solicitudes-cancha","host":["{{base_url}}"],"path":["solicitudes-cancha"]}}},
+        {"name":"Obtener solicitud cancha por id","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/solicitudes-cancha/:id","host":["{{base_url}}"],"path":["solicitudes-cancha",":id"]}}},
+        {"name":"Actualizar solicitud cancha","request":{"method":"PUT","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"solicitudId\": 1,\n  \"canchaId\": 3\n}"},"url":{"raw":"{{base_url}}/solicitudes-cancha/:id","host":["{{base_url}}"],"path":["solicitudes-cancha",":id"]}}},
+        {"name":"Eliminar solicitud cancha","request":{"method":"DELETE","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/solicitudes-cancha/:id","host":["{{base_url}}"],"path":["solicitudes-cancha",":id"]}}}
+      ]
+    },
+    {
+      "name": "Pagos",
+      "item": [
+        {"name":"Listar pagos","request":{"method":"GET","header":[{"key":"Content-Type","value":"application/json"}],"url":{"raw":"{{base_url}}/api/pagos","host":["{{base_url}}"],"path":["api","pagos"]}}},
+        {"name":"Registrar pago","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"monto\": 50.0,\n  \"metodoPago\": \"DESCONOCIDO\",\n  \"reservaId\": 1\n}"},"url":{"raw":"{{base_url}}/api/pagos","host":["{{base_url}}"],"path":["api","pagos"]}}}
+      ]
+    }
+  ]
+}
