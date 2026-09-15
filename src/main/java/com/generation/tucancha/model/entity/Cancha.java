@@ -23,15 +23,20 @@ public class Cancha {
     @Column(nullable = false)
     private boolean disponible = true;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "complejo_id", nullable = false)
+    private Complejo complejo;
+
     public Cancha ( ) {
     }
 
-    public Cancha (Long id, String nombre, String descripcion, BigDecimal precioPorHora, boolean disponible) {
+    public Cancha (Long id, String nombre, String descripcion, BigDecimal precioPorHora, boolean disponible, Complejo complejo) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioPorHora = precioPorHora;
         this.disponible = disponible;
+        this.complejo = complejo;
     }
 
     // Getters y Setters
@@ -73,5 +78,13 @@ public class Cancha {
 
     public void setDisponible (boolean disponible) {
         this.disponible = disponible;
+    }
+
+    public Complejo getComplejo() {
+        return complejo;
+    }
+
+    public void setComplejo(Complejo complejo) {
+        this.complejo = complejo;
     }
 }

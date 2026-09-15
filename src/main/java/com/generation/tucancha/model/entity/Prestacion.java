@@ -13,6 +13,10 @@ public class Prestacion {
     private String nombre;
     private String descripcion;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "complejo_id", nullable = false)
+    private Complejo complejo;
+
     public Prestacion ( ) {
     }
 
@@ -38,5 +42,13 @@ public class Prestacion {
 
     public void setDescripcion (String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public Complejo getComplejo() {
+        return complejo;
+    }
+
+    public void setComplejo(Complejo complejo) {
+        this.complejo = complejo;
     }
 }
