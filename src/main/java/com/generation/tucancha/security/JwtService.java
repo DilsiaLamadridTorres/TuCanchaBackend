@@ -1,6 +1,6 @@
-package com.generation.vetcare.security;
+package com.generation.tucancha.security;
 
-import com.generation.vetcare.model.Usuario;
+import com.generation.tucancha.model.entity.Usuario;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;

@@ -59,6 +59,14 @@ public Complejo(String nombreComplejo, String nit, String provincia, String ciud
         return id;
     }
 
+    public Long getIdComplejo() {
+        return id;
+    }
+
+    public void setIdComplejo(Long id) {
+        this.id = id;
+    }
+
     public String getNombreComplejo() {
         return nombreComplejo;
     }
