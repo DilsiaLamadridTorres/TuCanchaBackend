@@ -14,7 +14,7 @@ public class Prestacion {
     private String descripcion;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "complejo_id", nullable = false)
+    @JoinColumn(name = "complejo_id")
     private Complejo complejo;
 
     public Prestacion ( ) {
