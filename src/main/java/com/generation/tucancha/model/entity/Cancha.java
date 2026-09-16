@@ -167,6 +167,14 @@ public class Cancha {
        GETTERS Y SETTERS
        ========================================================= */
 
+    public Long getId() {
+        return idCancha;
+    }
+
+    public void setId(Long idCancha) {
+        this.idCancha = idCancha;
+    }
+
     public Long getIdCancha() {
         return idCancha;
     }

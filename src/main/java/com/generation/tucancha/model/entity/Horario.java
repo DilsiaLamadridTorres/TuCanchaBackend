@@ -4,6 +4,7 @@ import com.generation.tucancha.model.enums.EstadoHorario;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -110,10 +111,22 @@ public class Horario {
         this.estado = estado;
     }
 
+    public Horario(LocalDateTime inicio, LocalDateTime fin) {
+       this(null, null, inicio.toLocalDate(), inicio.toLocalTime(), fin.toLocalTime(), EstadoHorario.DISPONIBLE);
+    }
+
 
     /* =========================================================
        GETTERS Y SETTERS
        ========================================================= */
+
+    public Long getId() {
+        return idHorario;
+    }
+
+    public void setId(Long idHorario) {
+        this.idHorario = idHorario;
+    }
 
     public Long getIdHorario() {
         return idHorario;
