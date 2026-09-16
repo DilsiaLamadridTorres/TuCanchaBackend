@@ -281,4 +281,37 @@ public class Cancha {
     public void setEstado(EstadoCancha estado) {
         this.estado = estado;
     }
+
+    // Compatibilidad con código legacy / endpoints previos
+    public Long getId() {
+        return idCancha;
+    }
+
+    public void setId(Long id) {
+        this.idCancha = id;
+    }
+
+    public String getDescripcion() {
+        return otrosDeportes;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.otrosDeportes = descripcion;
+    }
+
+    public BigDecimal getPrecioPorHora() {
+        return precioHora;
+    }
+
+    public void setPrecioPorHora(BigDecimal precioPorHora) {
+        this.precioHora = precioPorHora;
+    }
+
+    public boolean isDisponible() {
+        return this.estado == EstadoCancha.ACTIVA;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.estado = disponible ? EstadoCancha.ACTIVA : EstadoCancha.INACTIVA;
+    }
 }

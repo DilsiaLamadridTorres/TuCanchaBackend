@@ -1,7 +1,7 @@
-package com.generation.vetcare.security;
+package com.generation.tucancha.security;
 
-import com.generation.vetcare.model.Usuario;
-import com.generation.vetcare.repository.UsuarioRepository;
+import com.generation.tucancha.model.entity.Usuario;
+import com.generation.tucancha.repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
