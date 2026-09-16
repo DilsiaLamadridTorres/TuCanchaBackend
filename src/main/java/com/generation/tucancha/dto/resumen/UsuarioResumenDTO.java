@@ -1,6 +1,6 @@
 package com.generation.tucancha.dto.resumen;
 
-import com.generation.tucancha.model.entity.RolUsuario;
+import com.generation.tucancha.model.enums.RolUsuario;
 
 public class UsuarioResumenDTO {
 

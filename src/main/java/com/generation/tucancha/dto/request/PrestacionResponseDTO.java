@@ -1,23 +1,17 @@
-package com.generation.tucancha.model.entity;
+package com.generation.tucancha.dto.response;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "prestaciones")
-public class Prestacion {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PrestacionResponseDTO {
     private Long id;
-
     private String nombre;
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "complejo_id")
-    private Complejo complejo;
+    public PrestacionResponseDTO ( ) {
+    }
 
-    public Prestacion ( ) {
+    public PrestacionResponseDTO (Long id, String nombre, String descripcion) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public Long getId ( ) {
@@ -42,13 +36,5 @@ public class Prestacion {
 
     public void setDescripcion (String descripcion) {
         this.descripcion = descripcion;
-    }
-
-    public Complejo getComplejo() {
-        return complejo;
-    }
-
-    public void setComplejo(Complejo complejo) {
-        this.complejo = complejo;
     }
 }

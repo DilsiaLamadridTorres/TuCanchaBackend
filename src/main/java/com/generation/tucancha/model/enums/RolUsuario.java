@@ -1,6 +1,8 @@
-package com.generation.tucancha.model.entity;
+package com.generation.tucancha.model.enums;
 
 public enum RolUsuario {
-    JUGADOR,
-    ADMINISTRADOR
+    ADMIN,
+    CLIENTE,
+    PROPIETARIO,
+    JUGADOR
 }
