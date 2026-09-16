@@ -282,14 +282,6 @@ public class Cancha {
         this.estado = estado;
     }
 
-    // Compatibilidad con código legacy / endpoints previos
-    public Long getId() {
-        return idCancha;
-    }
-
-    public void setId(Long id) {
-        this.idCancha = id;
-    }
 
     public String getDescripcion() {
         return otrosDeportes;
