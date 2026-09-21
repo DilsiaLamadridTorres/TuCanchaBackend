@@ -48,6 +48,13 @@ public class CanchaController {
                 canchaService.obtenerTodas()
         );
     }
+    @GetMapping("/activas")
+    public ResponseEntity<List<CanchaResponseDTO>> obtenerActivas() {
+
+        return ResponseEntity.ok(
+                canchaService.obtenerActivas()
+        );
+    }
 
     // ==========================================
     // GET - POR ID
