@@ -18,7 +18,7 @@ public class CorsConfig {
 
         // Permite solicitudes desde cualquier origen.
         // En producción esto se restringe al dominio del frontend.
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOrigin("https://dilsialamadridtorres.github.io");
 
         // Permite los métodos HTTP que usa el frontend.
         config.addAllowedMethod("GET");
@@ -29,10 +29,9 @@ public class CorsConfig {
 
         // Permite todos los headers, incluyendo Authorization: Bearer <token>
         config.addAllowedHeader("*");
-        config.addAllowedOrigin("https://dilsialamadridtorres.github.io/APP_TuCancha/");
 
         // Permite que el navegador lea el header Authorization en las respuestas.
-        config.setAllowCredentials(false);
+        config.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
