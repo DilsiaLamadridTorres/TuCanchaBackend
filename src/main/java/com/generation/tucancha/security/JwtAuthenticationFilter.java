@@ -2,7 +2,6 @@ package com.generation.tucancha.security;
 
 import com.generation.tucancha.model.entity.Usuario;
 import com.generation.tucancha.repository.UsuarioRepository;
-import com.generation.tucancha.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,18 +21,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UsuarioRepository usuarioRepository;
 
-    public JwtAuthenticationFilter(
-            JwtService jwtService,
-            UsuarioRepository usuarioRepository) {
+    public JwtAuthenticationFilter(JwtService jwtService, UsuarioRepository usuarioRepository) {
         this.jwtService = jwtService;
         this.usuarioRepository = usuarioRepository;
     }
 
     @Override
-    protected void doFilterInternal(
-            HttpServletRequest request,
-            HttpServletResponse response,
-            FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
         String header = request.getHeader("Authorization");
@@ -45,28 +39,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         try {
             String token = header.substring(7);
+            String username = jwtService.extraerUsername(token);
+            Usuario usuario = usuarioRepository.findByUsername(username).orElseThrow();
 
-            String correo = jwtService.extraerUsername(token);
-
-            Usuario usuario = usuarioRepository
-                    .findByCorreo(correo)
-                    .orElseThrow();
-
-            var autoridad = new SimpleGrantedAuthority(
-                    "ROLE_" + usuario.getRol().name()
-            );
-
-            var autenticacion =
-                    new UsernamePasswordAuthenticationToken(
-                            usuario.getCorreo(),
-                            null,
-                            List.of(autoridad)
-                    );
-
-            SecurityContextHolder
-                    .getContext()
-                    .setAuthentication(autenticacion);
-
+            var autoridad = new SimpleGrantedAuthority("ROLE_" + usuario.getRol().name());
+            var autenticacion = new UsernamePasswordAuthenticationToken(usuario.getUsername(), null, List.of(autoridad));
+            SecurityContextHolder.getContext().setAuthentication(autenticacion);
         } catch (Exception e) {
             SecurityContextHolder.clearContext();
         }

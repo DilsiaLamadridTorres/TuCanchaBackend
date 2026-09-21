@@ -34,16 +34,23 @@ public class TestDataController {
 
     @PostMapping("/horarios")
     @ResponseStatus(HttpStatus.CREATED)
-    public Horario crearHorario(@RequestBody Map<String, String> body) {
-        String inicio = body.get("inicio");
-        String fin = body.get("fin");
+    public Horario crearHorario(@RequestBody Map<String, Object> body) {
+        String inicio = (String) body.get("inicio");
+        String fin = (String) body.get("fin");
+        Number canchaIdNum = (Number) body.get("canchaId");
+
+        if (inicio == null || fin == null || canchaIdNum == null) {
+            throw new IllegalArgumentException("Faltan campos required: inicio, fin, canchaId");
+        }
+
         try {
             LocalDateTime ini = LocalDateTime.parse(inicio);
             LocalDateTime fn = LocalDateTime.parse(fin);
-            Horario h = new Horario();
-            h.setFecha(ini.toLocalDate());
-            h.setHoraInicio(ini.toLocalTime());
-            h.setHoraFin(fn.toLocalTime());
+            Cancha cancha = canchaRepository.findById(canchaIdNum.longValue())
+                    .orElseThrow(() -> new IllegalArgumentException("Cancha no encontrada con id: " + canchaIdNum.longValue()));
+
+            Horario h = new Horario(ini, fn);
+            h.setCancha(cancha);
             h.setEstado(EstadoHorario.DISPONIBLE);
             return horarioRepository.save(h);
         } catch (DateTimeParseException e) {
@@ -55,7 +62,6 @@ public class TestDataController {
     @ResponseStatus(HttpStatus.CREATED)
     public Cancha crearCancha(@RequestBody Map<String, Object> body) {
         String nombre = (String) body.get("nombre");
-        String descripcion = (String) body.getOrDefault("descripcion", null);
         Number precioNum = (Number) body.get("precioPorHora");
         Number complejoIdNum = (Number) body.get("complejoId");
 
@@ -68,15 +74,24 @@ public class TestDataController {
                 .orElseThrow(() -> new IllegalArgumentException("Complejo no encontrado con id: " + complejoId));
 
         Cancha cancha = new Cancha();
-        cancha.setNombre(nombre);
-        cancha.setDeporte("FUTBOL");
-        cancha.setDescripcion(descripcion);
-        cancha.setPrecioHora(new BigDecimal(precioNum.toString()));
-        cancha.setDuracionMinutos(60);
-        cancha.setTechada(true);
-        cancha.setEstado(EstadoCancha.ACTIVA);
         cancha.setComplejo(complejo);
-        cancha.setDisponible(true);
+        cancha.setNombre(nombre);
+        cancha.setDeporte((String) body.getOrDefault("deporte", "FUTBOL"));
+        cancha.setTipoPiso((String) body.getOrDefault("tipoPiso", "Césped sintético"));
+        cancha.setPrecioHora(new BigDecimal(precioNum.toString()));
+        cancha.setDuracionMinutos(((Number) body.getOrDefault("duracionMinutos", 60)).intValue());
+        cancha.setTechada(Boolean.TRUE.equals(body.getOrDefault("techada", true)));
+        Object otrosObj = body.get("otrosDeportes");
+        Boolean otros = false;
+        if (otrosObj instanceof Boolean) {
+            otros = (Boolean) otrosObj;
+        } else if (otrosObj instanceof String) {
+            otros = Boolean.parseBoolean((String) otrosObj);
+        } else if (otrosObj instanceof Number) {
+            otros = ((Number) otrosObj).intValue() != 0;
+        }
+        cancha.setOtrosDeportes(otros);
+        cancha.setEstado(EstadoCancha.ACTIVA);
 
         return canchaRepository.save(cancha);
     }

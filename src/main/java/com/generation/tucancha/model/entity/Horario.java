@@ -112,10 +112,7 @@ public class Horario {
     }
 
     public Horario(LocalDateTime inicio, LocalDateTime fin) {
-       this.fecha = inicio.toLocalDate();
-       this.horaInicio = inicio.toLocalTime();
-       this.horaFin = fin.toLocalTime();
-       this.estado = EstadoHorario.DISPONIBLE;
+       this(null, null, inicio.toLocalDate(), inicio.toLocalTime(), fin.toLocalTime(), EstadoHorario.DISPONIBLE);
     }
 
 
@@ -123,16 +120,16 @@ public class Horario {
        GETTERS Y SETTERS
        ========================================================= */
 
-    public Long getIdHorario() {
-       return idHorario;
-    }
-
     public Long getId() {
-       return idHorario;
+        return idHorario;
     }
 
-    public void setId(Long id) {
-       this.idHorario = id;
+    public void setId(Long idHorario) {
+        this.idHorario = idHorario;
+    }
+
+    public Long getIdHorario() {
+        return idHorario;
     }
 
     public void setIdHorario(Long idHorario) {
@@ -183,4 +180,5 @@ public class Horario {
     public void setEstado(EstadoHorario estado) {
         this.estado = estado;
     }
+
 }
