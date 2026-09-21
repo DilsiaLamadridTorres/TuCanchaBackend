@@ -2,7 +2,6 @@ package com.generation.tucancha.security;
 
 import com.generation.tucancha.model.entity.Usuario;
 import com.generation.tucancha.repository.UsuarioRepository;
-import com.generation.tucancha.security.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
