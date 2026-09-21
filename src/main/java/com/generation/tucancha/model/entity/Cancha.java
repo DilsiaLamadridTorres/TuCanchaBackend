@@ -9,111 +9,68 @@ import java.math.BigDecimal;
 @Table(name = "canchas")
 public class Cancha {
 
-    /* =========================================================
-       ID
-       ========================================================= */
+    /*
+     * =========================================================
+     * ID
+     * =========================================================
+     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cancha")
     private Long idCancha;
 
-
-    /* =========================================================
-       RELACIÓN CON COMPLEJO
-       ========================================================= */
+    /*
+     * =========================================================
+     * RELACIÓN CON COMPLEJO
+     * =========================================================
+     */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-            name = "id_complejo",
-            nullable = false
-    )
+    @JoinColumn(name = "id_complejo", nullable = false)
     private Complejo complejo;
 
+    /*
+     * =========================================================
+     * INFORMACIÓN DE LA CANCHA
+     * =========================================================
+     */
 
-    /* =========================================================
-       INFORMACIÓN DE LA CANCHA
-       ========================================================= */
-
-    @Column(
-            name = "nombre",
-            nullable = false,
-            length = 100
-    )
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
 
-
-    @Column(
-            name = "deporte",
-            nullable = false,
-            length = 50
-    )
+    @Column(name = "deporte", nullable = false, length = 50)
     private String deporte;
 
-
-    @Column(
-            name = "tipo_piso",
-            length = 50
-    )
+    @Column(name = "tipo_piso", length = 50)
     private String tipoPiso;
 
-
-    @Column(
-            name = "largo",
-            precision = 8,
-            scale = 2
-    )
+    @Column(name = "largo", precision = 8, scale = 2)
     private BigDecimal largo;
 
-
-    @Column(
-            name = "ancho",
-            precision = 8,
-            scale = 2
-    )
+    @Column(name = "ancho", precision = 8, scale = 2)
     private BigDecimal ancho;
 
-
-    @Column(
-            name = "precio_hora",
-            nullable = false,
-            precision = 12,
-            scale = 2
-    )
+    @Column(name = "precio_hora", nullable = false, precision = 12, scale = 2)
     private BigDecimal precioHora;
 
-
-    @Column(
-            name = "duracion_minutos",
-            nullable = false
-    )
+    @Column(name = "duracion_minutos", nullable = false)
     private Integer duracionMinutos;
 
-
-    @Column(
-            name = "techada",
-            nullable = false
-    )
+    @Column(name = "techada", nullable = false)
     private Boolean techada;
 
-
-    @Column(
-            name = "otros_deportes",
-            nullable = false
-    )
+    @Column(name = "otros_deportes", nullable = false)
     private Boolean otrosDeportes = false;
 
-
-    /* =========================================================
-       ESTADO DE LA CANCHA
-       ========================================================= */
+    /*
+     * =========================================================
+     * ESTADO DE LA CANCHA
+     * =========================================================
+     */
 
     @Enumerated(EnumType.STRING)
-    @Column(
-            name = "estado",
-            nullable = false,
-            length = 20
-    )
+    @Column(name = "estado", nullable = false, length = 20)
     private EstadoCancha estado = EstadoCancha.PENDIENTE;
 
     @Transient
@@ -122,10 +79,11 @@ public class Cancha {
     @Transient
     private Boolean disponible = true;
 
-
-    /* =========================================================
-       CONSTRUCTORES
-       ========================================================= */
+    /*
+     * =========================================================
+     * CONSTRUCTORES
+     * =========================================================
+     */
 
     public Cancha() {
     }
@@ -141,8 +99,7 @@ public class Cancha {
             Integer duracionMinutos,
             Boolean techada,
             Boolean otrosDeportes,
-            EstadoCancha estado
-    ) {
+            EstadoCancha estado) {
         this.complejo = complejo;
         this.nombre = nombre;
         this.deporte = deporte;
@@ -156,10 +113,11 @@ public class Cancha {
         this.estado = estado;
     }
 
-
-    /* =========================================================
-       GETTERS Y SETTERS
-       ========================================================= */
+    /*
+     * =========================================================
+     * GETTERS Y SETTERS
+     * =========================================================
+     */
 
     public Long getId() {
         return idCancha;
@@ -177,14 +135,6 @@ public class Cancha {
         this.idCancha = idCancha;
     }
 
-    public Long getId() {
-        return idCancha;
-    }
-
-    public void setId(Long id) {
-        this.idCancha = id;
-    }
-
     public Long getIdComplejo() {
         return complejo != null ? complejo.getId() : null;
     }
@@ -197,7 +147,6 @@ public class Cancha {
         this.complejo = complejo;
     }
 
-
     public String getNombre() {
         return nombre;
     }
@@ -205,7 +154,6 @@ public class Cancha {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
 
     public String getDeporte() {
         return deporte;
@@ -215,7 +163,6 @@ public class Cancha {
         this.deporte = deporte;
     }
 
-
     public String getTipoPiso() {
         return tipoPiso;
     }
@@ -223,7 +170,6 @@ public class Cancha {
     public void setTipoPiso(String tipoPiso) {
         this.tipoPiso = tipoPiso;
     }
-
 
     public BigDecimal getLargo() {
         return largo;
@@ -233,7 +179,6 @@ public class Cancha {
         this.largo = largo;
     }
 
-
     public BigDecimal getAncho() {
         return ancho;
     }
@@ -241,7 +186,6 @@ public class Cancha {
     public void setAncho(BigDecimal ancho) {
         this.ancho = ancho;
     }
-
 
     public BigDecimal getPrecioHora() {
         return precioHora;
@@ -279,7 +223,6 @@ public class Cancha {
         return Boolean.TRUE.equals(getDisponible());
     }
 
-
     public Integer getDuracionMinutos() {
         return duracionMinutos;
     }
@@ -287,7 +230,6 @@ public class Cancha {
     public void setDuracionMinutos(Integer duracionMinutos) {
         this.duracionMinutos = duracionMinutos;
     }
-
 
     public Boolean getTechada() {
         return techada;
@@ -297,7 +239,6 @@ public class Cancha {
         this.techada = techada;
     }
 
-
     public Boolean getOtrosDeportes() {
         return otrosDeportes;
     }
@@ -306,37 +247,11 @@ public class Cancha {
         this.otrosDeportes = otrosDeportes;
     }
 
-
     public EstadoCancha getEstado() {
         return estado;
     }
 
     public void setEstado(EstadoCancha estado) {
         this.estado = estado;
-    }
-
-
-    public String getDescripcion() {
-        return otrosDeportes;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.otrosDeportes = descripcion;
-    }
-
-    public BigDecimal getPrecioPorHora() {
-        return precioHora;
-    }
-
-    public void setPrecioPorHora(BigDecimal precioPorHora) {
-        this.precioHora = precioPorHora;
-    }
-
-    public boolean isDisponible() {
-        return this.estado == EstadoCancha.ACTIVA;
-    }
-
-    public void setDisponible(boolean disponible) {
-        this.estado = disponible ? EstadoCancha.ACTIVA : EstadoCancha.INACTIVA;
     }
 }

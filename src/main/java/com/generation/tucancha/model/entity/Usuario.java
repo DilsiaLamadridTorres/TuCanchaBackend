@@ -23,78 +23,79 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private RolUsuario rol;
 
-    public Usuario ( ) {
+    public Usuario() {
     }
+
     @PrePersist
     public void asignarFechaRegistro() {
         this.fechaRegistro = LocalDateTime.now();
     }
 
-    public Long getId ( ) {
+    public Long getId() {
         return id;
     }
 
-    public void setId (Long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getNombre ( ) {
+    public String getNombre() {
         return nombre;
     }
 
-    public void setNombre (String nombre) {
+    public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
-    public String getPassword ( ) {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword (String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getTelefono( ) {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono (String telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
-    public String getCorreo ( ) {
+    public String getCorreo() {
         return correo;
     }
 
-    public void setCorreo (String correo) {
+    public void setCorreo(String correo) {
         this.correo = correo;
     }
 
-    public boolean isEstado ( ) {
+    public boolean isEstado() {
         return estado;
     }
 
-    public void setEstado (boolean estado) {
+    public void setEstado(boolean estado) {
         this.estado = estado;
     }
 
-    public LocalDateTime getFechaRegistro ( ) {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro (LocalDateTime fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public RolUsuario getRol ( ) {
+    public RolUsuario getRol() {
         return rol;
     }
 
-    public void setRol (RolUsuario rol) {
+    public void setRol(RolUsuario rol) {
         this.rol = rol;
     }
 
     public String getUsername() {
-        return correo != null ? correo : email;
+        return correo;
     }
 }
