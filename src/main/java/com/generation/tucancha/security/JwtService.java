@@ -13,8 +13,8 @@ import java.util.Date;
 @Service
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String jwtSecret;
+//    @Value("${jwt.secret}")
+    private String jwtSecret="clave-secreta-larga-de-al-menos-32-caracteres-vetcare-2026";
 
     private static final long EXPIRACION_MS = 1000L * 60 * 60 * 8;
 
