@@ -39,7 +39,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://127.0.0.1:5500",
                 "http://localhost:5500",
-                "https://dilsialamadridtorres.github.io/APP_TuCancha/"
+                "https://dilsialamadridtorres.github.io/APP_TuCancha/",
+                 https://tucanchabackend-production-e5df.up.railway.app/    
         ));
 
         configuration.setAllowedMethods(List.of(
@@ -62,38 +63,35 @@ public class SecurityConfig {
     }
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .cors(cors -> {})
-                .csrf(csrf -> csrf.disable())
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/titulares").permitAll()
-                                .requestMatchers(
-                                        HttpMethod.POST,
-                                        "/api/complejos/1/fotos"
-                                ).permitAll()
-                                .anyRequest().authenticated()
-//                        .requestMatchers(HttpMethod.POST, "/api/veterinarios", "/api/especialidades").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")
-//                        .requestMatchers(HttpMethod.POST, "/api/duenos", "/api/mascotas", "/api/citas").hasAnyRole("RECEPCIONISTA", "ADMIN")
-                )
-                .exceptionHandling(ex -> ex
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                            response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"Token inválido, ausente o expirado\"}");
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                            response.setContentType("application/json");
-                            response.getWriter().write("{\"error\": \"No tienes permiso para realizar esta acción\"}");
-                        })
-                )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+       http
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/titulares").permitAll()
+                .requestMatchers(
+                        HttpMethod.POST,
+                        "/api/complejos/1/fotos"
+                ).permitAll()
+                .anyRequest().authenticated()
+        )
+        .exceptionHandling(ex -> ex
+                .authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"Token inválido, ausente o expirado\"}");
+                })
+                .accessDeniedHandler((request, response, accessDeniedException) -> {
+                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+                    response.setContentType("application/json");
+                    response.getWriter().write("{\"error\": \"No tienes permiso para realizar esta acción\"}");
+                })
+        )
+        .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
+return http.build();
     }
 }
