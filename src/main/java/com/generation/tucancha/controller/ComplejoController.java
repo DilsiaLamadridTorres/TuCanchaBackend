@@ -6,8 +6,6 @@ import com.generation.tucancha.service.ComplejoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/complejos")
 @CrossOrigin(origins = "*")
@@ -15,46 +13,43 @@ public class ComplejoController {
 
     private final ComplejoService complejoService;
 
-    public ComplejoController(ComplejoService complejoService) {
-        this.complejoService = complejoService;
+    public ComplejoController(
+            ComplejoService complejoService) {
+
+        this.complejoService =
+                complejoService;
     }
 
-    // ==========================================
-    // POST - CREAR COMPLEJO
-    // ==========================================
+    // =========================================================
+    // POST - CREAR
+    // =========================================================
 
     @PostMapping
     public ResponseEntity<ComplejoResponseDTO> crearComplejo(
             @RequestBody ComplejoRequestDTO request) {
 
         ComplejoResponseDTO response =
-                complejoService.crearComplejo(request);
-
-        return ResponseEntity.ok(response);
-    }
-
-    // ==========================================
-    // GET - TODOS LOS COMPLEJOS
-    // ==========================================
-
-    @GetMapping
-    public ResponseEntity<List<ComplejoResponseDTO>> obtenerTodos() {
+                complejoService.crearComplejo(
+                        request
+                );
 
         return ResponseEntity.ok(
-                complejoService.obtenerTodos()
+                response
         );
     }
 
-    // ==========================================
-    // GET - COMPLEJO POR ID
-    // ==========================================
+    // =========================================================
+    // GET - OBTENER POR ID
+    // =========================================================
 
     @GetMapping("/{id}")
     public ResponseEntity<ComplejoResponseDTO> obtenerPorId(
             @PathVariable Long id) {
 
         return ResponseEntity.ok(
-                complejoService.obtenerPorId(id)
+                complejoService.obtenerPorId(
+                        id
+                )
         );
     }
 }

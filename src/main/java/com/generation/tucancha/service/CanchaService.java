@@ -97,6 +97,15 @@ public class CanchaService {
 
         return convertirAResponse(cancha);
     }
+    @Transactional(readOnly = true)
+    public List<CanchaResponseDTO> obtenerActivas() {
+
+        return canchaRepository
+                .findByEstado(EstadoCancha.ACTIVA)
+                .stream()
+                .map(this::convertirAResponse)
+                .toList();
+    }
 
     // ==========================================
     // ACTUALIZAR
