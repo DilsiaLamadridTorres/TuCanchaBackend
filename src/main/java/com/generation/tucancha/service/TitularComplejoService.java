@@ -10,27 +10,33 @@ import java.util.List;
 
 @Service
 public class TitularComplejoService {
+
     private final TitularComplejoRepository titularComplejoRepository;
 
-    public TitularComplejoService(TitularComplejoRepository titularComplejoRepository) {
+    public TitularComplejoService(
+            TitularComplejoRepository titularComplejoRepository) {
+
         this.titularComplejoRepository = titularComplejoRepository;
     }
 
-    public TitularComplejoResponse crear(TitularComplejoRequest request) {
+    public TitularComplejoResponse crear(
+            TitularComplejoRequest request) {
+
         TitularComplejo titularComplejo = new TitularComplejo(
-                request.getNombre(),
-                request.getApellido(),
-                request.getCedula(),
-                request.getCorreo(),
-                request.getTelefono(),
-                request.getFechaRegistro()
+                request.getNombreTitular(),
+                request.getCedulaTitular(),
+                request.getCorreoTitular(),
+                request.getTelefonoTitular()
         );
+
         TitularComplejo titularGuardado =
                 titularComplejoRepository.save(titularComplejo);
+
         return convertirAResponse(titularGuardado);
     }
 
     public List<TitularComplejoResponse> obtenerTodos() {
+
         return titularComplejoRepository.findAll()
                 .stream()
                 .map(this::convertirAResponse)
@@ -42,7 +48,9 @@ public class TitularComplejoService {
         TitularComplejo titularComplejo =
                 titularComplejoRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException("Titular no encontrado")
+                                new RuntimeException(
+                                        "Titular no encontrado"
+                                )
                         );
 
         return convertirAResponse(titularComplejo);
@@ -50,21 +58,31 @@ public class TitularComplejoService {
 
     public TitularComplejoResponse actualizar(
             Long id,
-            TitularComplejoRequest request
-    ) {
+            TitularComplejoRequest request) {
 
         TitularComplejo titularComplejo =
                 titularComplejoRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException("Titular no encontrado")
+                                new RuntimeException(
+                                        "Titular no encontrado"
+                                )
                         );
 
-        titularComplejo.setNombre(request.getNombre());
-        titularComplejo.setApellido(request.getApellido());
-        titularComplejo.setCedula(request.getCedula());
-        titularComplejo.setCorreo(request.getCorreo());
-        titularComplejo.setTelefono(request.getTelefono());
-        titularComplejo.setFechaRegistro(request.getFechaRegistro());
+        titularComplejo.setNombreTitular(
+                request.getNombreTitular()
+        );
+
+        titularComplejo.setCedulaTitular(
+                request.getCedulaTitular()
+        );
+
+        titularComplejo.setCorreoTitular(
+                request.getCorreoTitular()
+        );
+
+        titularComplejo.setTelefonoTitular(
+                request.getTelefonoTitular()
+        );
 
         TitularComplejo titularActualizado =
                 titularComplejoRepository.save(titularComplejo);
@@ -73,25 +91,28 @@ public class TitularComplejoService {
     }
 
     public void eliminar(Long id) {
+
         TitularComplejo titularComplejo =
                 titularComplejoRepository.findById(id)
                         .orElseThrow(() ->
-                                new RuntimeException("Titular no encontrado")
+                                new RuntimeException(
+                                        "Titular no encontrado"
+                                )
                         );
 
         titularComplejoRepository.delete(titularComplejo);
     }
 
-    private TitularComplejoResponse convertirAResponse(TitularComplejo titularComplejo) {
+    private TitularComplejoResponse convertirAResponse(
+            TitularComplejo titularComplejo) {
+
         return new TitularComplejoResponse(
                 titularComplejo.getId(),
-                titularComplejo.getNombre(),
-                titularComplejo.getApellido(),
-                titularComplejo.getCedula(),
-                titularComplejo.getCorreo(),
-                titularComplejo.getTelefono(),
+                titularComplejo.getNombreTitular(),
+                titularComplejo.getCedulaTitular(),
+                titularComplejo.getCorreoTitular(),
+                titularComplejo.getTelefonoTitular(),
                 titularComplejo.getFechaRegistro()
         );
     }
-
 }

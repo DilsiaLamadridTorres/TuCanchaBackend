@@ -1,14 +1,15 @@
-package com.generation.tucancha.model.entity;
+package com.generation.tucancha.dto.response;
 
-import jakarta.persistence.*;
+public class ComplejoResponseDTO {
 
-@Entity
-@Table(name = "prestaciones")
-public class Prestacion {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String nombreComplejo;
+    private String provincia;
+    private String ciudad;
+    private String direccion;
+    private String telefonoComplejo;
+    private Long titularComplejoId;
+
     private boolean estacionamiento;
     private boolean vestuario;
     private boolean asador;
@@ -16,22 +17,8 @@ public class Prestacion {
     private boolean duchas;
     private boolean tv;
     private boolean bufet;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "complejo_id")
-    private Complejo complejo;
 
-    public Prestacion ( ) {
-    }
-
-    public Prestacion(Complejo complejo, boolean bufet, boolean tv, boolean duchas, boolean bar, boolean asador, boolean vestuario, boolean estacionamiento) {
-          this.complejo = complejo;
-        this.bufet = bufet;
-        this.tv = tv;
-        this.duchas = duchas;
-        this.bar = bar;
-        this.asador = asador;
-        this.vestuario = vestuario;
-        this.estacionamiento = estacionamiento;
+    public ComplejoResponseDTO() {
     }
 
     public Long getId() {
@@ -40,6 +27,54 @@ public class Prestacion {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getNombreComplejo() {
+        return nombreComplejo;
+    }
+
+    public void setNombreComplejo(String nombreComplejo) {
+        this.nombreComplejo = nombreComplejo;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getTelefonoComplejo() {
+        return telefonoComplejo;
+    }
+
+    public void setTelefonoComplejo(String telefonoComplejo) {
+        this.telefonoComplejo = telefonoComplejo;
+    }
+
+    public Long getTitularComplejoId() {
+        return titularComplejoId;
+    }
+
+    public void setTitularComplejoId(Long titularComplejoId) {
+        this.titularComplejoId = titularComplejoId;
     }
 
     public boolean isEstacionamiento() {
@@ -96,13 +131,5 @@ public class Prestacion {
 
     public void setBufet(boolean bufet) {
         this.bufet = bufet;
-    }
-
-    public Complejo getComplejo() {
-        return complejo;
-    }
-
-    public void setComplejo(Complejo complejo) {
-        this.complejo = complejo;
     }
 }

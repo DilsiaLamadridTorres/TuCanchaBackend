@@ -1,207 +1,94 @@
 package com.generation.tucancha.controller;
 
-import com.generation.tucancha.dto.request.CanchaRequest;
-import com.generation.tucancha.dto.response.CanchaResponse;
-import com.generation.tucancha.model.enums.EstadoCancha;
+import com.generation.tucancha.dto.request.CanchaRequestDTO;
+import com.generation.tucancha.dto.response.CanchaResponseDTO;
 import com.generation.tucancha.service.CanchaService;
-
 import jakarta.validation.Valid;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-/**
- * Controlador REST encargado de gestionar
- * las operaciones relacionadas con las canchas.
- */
 @RestController
 @RequestMapping("/api/canchas")
+@CrossOrigin(origins = "*")
 public class CanchaController {
 
     private final CanchaService canchaService;
 
-
-    /* =========================================================
-       INYECCIÓN DE DEPENDENCIAS
-       ========================================================= */
-
-    public CanchaController(
-            CanchaService canchaService
-    ) {
+    public CanchaController(CanchaService canchaService) {
         this.canchaService = canchaService;
     }
 
-
-    /* =========================================================
-       CREAR CANCHA
-       POST /api/canchas
-       ========================================================= */
+    // ==========================================
+    // POST - CREAR
+    // ==========================================
 
     @PostMapping
-    public ResponseEntity<CanchaResponse> crearCancha(
-            @Valid
-            @RequestBody
-            CanchaRequest request
+    public ResponseEntity<CanchaResponseDTO> crear(
+            @Valid @RequestBody CanchaRequestDTO request
     ) {
 
-        CanchaResponse response =
-                canchaService.crearCancha(
-                        request
-                );
-
+        CanchaResponseDTO response = canchaService.crear(request);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(response);
     }
 
-
-    /* =========================================================
-       LISTAR TODAS LAS CANCHAS
-       GET /api/canchas
-       ========================================================= */
+    // ==========================================
+    // GET - TODAS
+    // ==========================================
 
     @GetMapping
-    public ResponseEntity<List<CanchaResponse>> listarTodas() {
-
-        List<CanchaResponse> canchas =
-                canchaService.listarTodas();
-
+    public ResponseEntity<List<CanchaResponseDTO>> obtenerTodas() {
 
         return ResponseEntity.ok(
-                canchas
+                canchaService.obtenerTodas()
         );
     }
 
-
-    /* =========================================================
-       OBTENER CANCHA POR ID
-       GET /api/canchas/{id}
-       ========================================================= */
+    // ==========================================
+    // GET - POR ID
+    // ==========================================
 
     @GetMapping("/{id}")
-    public ResponseEntity<CanchaResponse> obtenerPorId(
-            @PathVariable("id")
-            Long idCancha
+    public ResponseEntity<CanchaResponseDTO> obtenerPorId(
+            @PathVariable Long id
     ) {
 
-        CanchaResponse response =
-                canchaService.obtenerPorId(
-                        idCancha
-                );
-
-
         return ResponseEntity.ok(
-                response
+                canchaService.obtenerPorId(id)
         );
     }
 
-
-    /* =========================================================
-       LISTAR CANCHAS POR COMPLEJO
-       GET /api/canchas/complejo/{complejoId}
-       ========================================================= */
-
-    @GetMapping("/complejo/{complejoId}")
-    public ResponseEntity<List<CanchaResponse>> listarPorComplejo(
-            @PathVariable
-            Long complejoId
-    ) {
-
-        List<CanchaResponse> canchas =
-                canchaService.listarPorComplejo(
-                        complejoId
-                );
-
-
-        return ResponseEntity.ok(
-                canchas
-        );
-    }
-
-
-    /* =========================================================
-       LISTAR CANCHAS POR ESTADO
-
-       Ejemplo:
-       GET /api/canchas/estado/ACTIVA
-       ========================================================= */
-
-    @GetMapping("/estado/{estado}")
-    public ResponseEntity<List<CanchaResponse>> listarPorEstado(
-            @PathVariable
-            EstadoCancha estado
-    ) {
-
-        List<CanchaResponse> canchas =
-                canchaService.listarPorEstado(
-                        estado
-                );
-
-
-        return ResponseEntity.ok(
-                canchas
-        );
-    }
-
-
-    /* =========================================================
-       ACTUALIZAR CANCHA
-       PUT /api/canchas/{id}
-       ========================================================= */
+    // ==========================================
+    // PUT - ACTUALIZAR
+    // ==========================================
 
     @PutMapping("/{id}")
-    public ResponseEntity<CanchaResponse> actualizarCancha(
-            @PathVariable("id")
-            Long idCancha,
-
-            @Valid
-            @RequestBody
-            CanchaRequest request
+    public ResponseEntity<CanchaResponseDTO> actualizar(
+            @PathVariable Long id,
+            @Valid @RequestBody CanchaRequestDTO request
     ) {
 
-        CanchaResponse response =
-                canchaService.actualizarCancha(
-                        idCancha,
-                        request
-                );
-
-
         return ResponseEntity.ok(
-                response
+                canchaService.actualizar(id, request)
         );
     }
 
+    // ==========================================
+    // DELETE - ELIMINAR
+    // ==========================================
 
-    /* =========================================================
-       CAMBIAR ESTADO DE LA CANCHA
-
-       Ejemplo:
-       PATCH /api/canchas/5/estado?estado=ACTIVA
-       ========================================================= */
-
-    @PatchMapping("/{id}/estado")
-    public ResponseEntity<CanchaResponse> cambiarEstado(
-            @PathVariable("id")
-            Long idCancha,
-
-            @RequestParam
-            EstadoCancha estado
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> eliminar(
+            @PathVariable Long id
     ) {
 
-        CanchaResponse response =
-                canchaService.cambiarEstado(
-                        idCancha,
-                        estado
-                );
+        canchaService.eliminar(id);
 
-
-        return ResponseEntity.ok(
-                response
-        );
+        return ResponseEntity.noContent().build();
     }
 }

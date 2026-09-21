@@ -1,7 +1,7 @@
 package com.generation.tucancha.controller;
 
-import com.generation.tucancha.dto.request.UsuarioRequest;
-import com.generation.tucancha.dto.response.UsuarioResponse;
+import com.generation.tucancha.dto.request.UsuarioRequestDTO;
+import com.generation.tucancha.dto.response.UsuarioResponseDTO;
 import com.generation.tucancha.dto.resumen.UsuarioResumenDTO;
 import com.generation.tucancha.service.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -26,16 +26,16 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<UsuarioResponseDTO> buscarPorId(@PathVariable Long id) {
         return usuarioService.obtenerPorId(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody UsuarioRequest request) {
+    public ResponseEntity<?> crear(@RequestBody UsuarioRequestDTO request) {
         try {
-            UsuarioResponse nuevoUsuario = usuarioService.guardar(request);
+            UsuarioResponseDTO nuevoUsuario = usuarioService.guardar(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

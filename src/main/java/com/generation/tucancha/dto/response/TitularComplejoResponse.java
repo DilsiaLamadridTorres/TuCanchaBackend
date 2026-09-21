@@ -1,85 +1,56 @@
 package com.generation.tucancha.dto.response;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-    public class TitularComplejoResponse {
-        private Long id;
-        private String nombre;
-        private String apellido;
-        private String cedula;
-        private String correo;
-        private String telefono;
-        private LocalDate fechaRegistro;
+public class TitularComplejoResponse {
 
-        public TitularComplejoResponse() {
-        }
+    private Long id;
+    private String nombreTitular;
+    private String cedulaTitular;
+    private String correoTitular;
+    private String telefonoTitular;
+    private LocalDateTime fechaRegistro;
 
-        public TitularComplejoResponse(Long id, String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaRegistro) {
-
-            this.id = id;
-            this.nombre = nombre;
-            this.apellido = apellido;
-            this.cedula = cedula;
-            this.correo = correo;
-            this.telefono = telefono;
-            this.fechaRegistro = fechaRegistro;
-        }
-
-        public Long getId() {
-            return id;
-        }
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
-
-
-        public String getApellido() {
-            return apellido;
-        }
-
-        public void setApellido(String apellido) {
-            this.apellido = apellido;
-        }
-
-
-        public String getCedula() {
-            return cedula;
-        }
-
-        public void setCedula(String cedula) {
-            this.cedula = cedula;
-        }
-
-
-        public String getCorreo() {
-            return correo;
-        }
-
-        public void setCorreo(String correo) {
-            this.correo = correo;
-        }
-
-
-        public String getTelefono() {
-            return telefono;
-        }
-
-        public void setTelefono(String telefono) {
-            this.telefono = telefono;
-        }
-
-
-        public LocalDate getFechaRegistro() {
-            return fechaRegistro;
-        }
-
-        public void setFechaRegistro(LocalDate fechaRegistro) {
-            this.fechaRegistro = fechaRegistro;
-        }
+    public TitularComplejoResponse() {
     }
 
+    public TitularComplejoResponse(
+            Long id,
+            String nombreTitular,
+            String cedulaTitular,
+            String correoTitular,
+            String telefonoTitular,
+            LocalDateTime fechaRegistro) {
+
+        this.id = id;
+        this.nombreTitular = nombreTitular;
+        this.cedulaTitular = cedulaTitular;
+        this.correoTitular = correoTitular;
+        this.telefonoTitular = telefonoTitular;
+        this.fechaRegistro = fechaRegistro;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombreTitular() {
+        return nombreTitular;
+    }
+
+    public String getCedulaTitular() {
+        return cedulaTitular;
+    }
+
+    public String getCorreoTitular() {
+        return correoTitular;
+    }
+
+    public String getTelefonoTitular() {
+        return telefonoTitular;
+    }
+
+    public LocalDateTime getFechaRegistro() {
+        return fechaRegistro;
+    }
+}

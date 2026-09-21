@@ -21,9 +21,6 @@ public class Cancha {
 
     /* =========================================================
        RELACIÓN CON COMPLEJO
-
-       Un complejo puede tener muchas canchas.
-       Una cancha pertenece a un solo complejo.
        ========================================================= */
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -102,9 +99,9 @@ public class Cancha {
 
     @Column(
             name = "otros_deportes",
-            length = 255
+            nullable = false
     )
-    private String otrosDeportes;
+    private Boolean otrosDeportes = false;
 
 
     /* =========================================================
@@ -117,24 +114,23 @@ public class Cancha {
             nullable = false,
             length = 20
     )
-    private EstadoCancha estado;
+    private EstadoCancha estado = EstadoCancha.PENDIENTE;
+
+    @Transient
+    private String descripcion;
+
+    @Transient
+    private Boolean disponible = true;
 
 
     /* =========================================================
-       CONSTRUCTOR VACÍO
-       JPA necesita este constructor.
+       CONSTRUCTORES
        ========================================================= */
 
     public Cancha() {
     }
 
-
-    /* =========================================================
-       CONSTRUCTOR
-       ========================================================= */
-
     public Cancha(
-            Long idCancha,
             Complejo complejo,
             String nombre,
             String deporte,
@@ -144,11 +140,9 @@ public class Cancha {
             BigDecimal precioHora,
             Integer duracionMinutos,
             Boolean techada,
-            String otrosDeportes,
+            Boolean otrosDeportes,
             EstadoCancha estado
     ) {
-
-        this.idCancha = idCancha;
         this.complejo = complejo;
         this.nombre = nombre;
         this.deporte = deporte;
@@ -175,6 +169,17 @@ public class Cancha {
         this.idCancha = idCancha;
     }
 
+    public Long getId() {
+        return idCancha;
+    }
+
+    public void setId(Long id) {
+        this.idCancha = id;
+    }
+
+    public Long getIdComplejo() {
+        return complejo != null ? complejo.getId() : null;
+    }
 
     public Complejo getComplejo() {
         return complejo;
@@ -238,6 +243,34 @@ public class Cancha {
         this.precioHora = precioHora;
     }
 
+    public BigDecimal getPrecioPorHora() {
+        return precioHora;
+    }
+
+    public void setPrecioPorHora(BigDecimal precioPorHora) {
+        this.precioHora = precioPorHora;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getDisponible() {
+        return disponible != null ? disponible : Boolean.TRUE;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public boolean isDisponible() {
+        return Boolean.TRUE.equals(getDisponible());
+    }
+
 
     public Integer getDuracionMinutos() {
         return duracionMinutos;
@@ -257,11 +290,11 @@ public class Cancha {
     }
 
 
-    public String getOtrosDeportes() {
+    public Boolean getOtrosDeportes() {
         return otrosDeportes;
     }
 
-    public void setOtrosDeportes(String otrosDeportes) {
+    public void setOtrosDeportes(Boolean otrosDeportes) {
         this.otrosDeportes = otrosDeportes;
     }
 

@@ -4,81 +4,25 @@ import com.generation.tucancha.model.enums.EstadoCancha;
 
 import java.math.BigDecimal;
 
-/**
- * DTO utilizado para devolver la información
- * de una cancha al cliente.
- */
-public class CanchaResponse {
+public class CanchaResponseDTO {
 
     private Long idCancha;
-
-    private Long complejoId;
-
+    private Long idComplejo;
     private String nombre;
-
     private String deporte;
-
     private String tipoPiso;
-
     private BigDecimal largo;
-
     private BigDecimal ancho;
-
     private BigDecimal precioHora;
-
     private Integer duracionMinutos;
-
     private Boolean techada;
-
-    private String otrosDeportes;
-
+    private Boolean otrosDeportes;
     private EstadoCancha estado;
+    private String descripcion;
+    private Boolean disponible;
 
-
-    /* =========================================================
-       CONSTRUCTOR VACÍO
-       ========================================================= */
-
-    public CanchaResponse() {
+    public CanchaResponseDTO() {
     }
-
-
-    /* =========================================================
-       CONSTRUCTOR
-       ========================================================= */
-
-    public CanchaResponse(
-            Long idCancha,
-            Long complejoId,
-            String nombre,
-            String deporte,
-            String tipoPiso,
-            BigDecimal largo,
-            BigDecimal ancho,
-            BigDecimal precioHora,
-            Integer duracionMinutos,
-            Boolean techada,
-            String otrosDeportes,
-            EstadoCancha estado
-    ) {
-        this.idCancha = idCancha;
-        this.complejoId = complejoId;
-        this.nombre = nombre;
-        this.deporte = deporte;
-        this.tipoPiso = tipoPiso;
-        this.largo = largo;
-        this.ancho = ancho;
-        this.precioHora = precioHora;
-        this.duracionMinutos = duracionMinutos;
-        this.techada = techada;
-        this.otrosDeportes = otrosDeportes;
-        this.estado = estado;
-    }
-
-
-    /* =========================================================
-       GETTERS Y SETTERS
-       ========================================================= */
 
     public Long getIdCancha() {
         return idCancha;
@@ -88,12 +32,12 @@ public class CanchaResponse {
         this.idCancha = idCancha;
     }
 
-    public Long getComplejoId() {
-        return complejoId;
+    public Long getIdComplejo() {
+        return idComplejo;
     }
 
-    public void setComplejoId(Long complejoId) {
-        this.complejoId = complejoId;
+    public void setIdComplejo(Long idComplejo) {
+        this.idComplejo = idComplejo;
     }
 
     public String getNombre() {
@@ -160,11 +104,11 @@ public class CanchaResponse {
         this.techada = techada;
     }
 
-    public String getOtrosDeportes() {
+    public Boolean getOtrosDeportes() {
         return otrosDeportes;
     }
 
-    public void setOtrosDeportes(String otrosDeportes) {
+    public void setOtrosDeportes(Boolean otrosDeportes) {
         this.otrosDeportes = otrosDeportes;
     }
 
@@ -174,5 +118,21 @@ public class CanchaResponse {
 
     public void setEstado(EstadoCancha estado) {
         this.estado = estado;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
     }
 }

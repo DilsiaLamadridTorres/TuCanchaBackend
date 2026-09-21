@@ -1,6 +1,6 @@
-package com.generation.vetcare.security;
+package com.generation.tucancha.security;
 
-import com.generation.vetcare.model.Usuario;
+import com.generation.tucancha.model.entity.Usuario;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +27,7 @@ public class JwtService {
         Date expiracion = new Date(ahora.getTime() + EXPIRACION_MS);
 
         return Jwts.builder()
-                .subject(usuario.getUsername())
+                .subject(usuario.getCorreo())
                 .claim("rol", usuario.getRol().name())
                 .issuedAt(ahora)
                 .expiration(expiracion)

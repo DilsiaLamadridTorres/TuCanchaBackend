@@ -3,6 +3,8 @@ package com.generation.tucancha.controller;
 import com.generation.tucancha.model.entity.Cancha;
 import com.generation.tucancha.model.entity.Complejo;
 import com.generation.tucancha.model.entity.Horario;
+import com.generation.tucancha.model.enums.EstadoCancha;
+import com.generation.tucancha.model.enums.EstadoHorario;
 import com.generation.tucancha.repository.CanchaRepository;
 import com.generation.tucancha.repository.ComplejoRepository;
 import com.generation.tucancha.repository.HorarioRepository;
@@ -38,7 +40,11 @@ public class TestDataController {
         try {
             LocalDateTime ini = LocalDateTime.parse(inicio);
             LocalDateTime fn = LocalDateTime.parse(fin);
-            Horario h = new Horario(ini, fn);
+            Horario h = new Horario();
+            h.setFecha(ini.toLocalDate());
+            h.setHoraInicio(ini.toLocalTime());
+            h.setHoraFin(fn.toLocalTime());
+            h.setEstado(EstadoHorario.DISPONIBLE);
             return horarioRepository.save(h);
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Fechas inválidas, usar formato ISO LocalDateTime, p.ej. 2026-09-16T10:00:00");
@@ -63,10 +69,14 @@ public class TestDataController {
 
         Cancha cancha = new Cancha();
         cancha.setNombre(nombre);
+        cancha.setDeporte("FUTBOL");
         cancha.setDescripcion(descripcion);
-        cancha.setPrecioPorHora(new BigDecimal(precioNum.toString()));
-        cancha.setDisponible(true);
+        cancha.setPrecioHora(new BigDecimal(precioNum.toString()));
+        cancha.setDuracionMinutos(60);
+        cancha.setTechada(true);
+        cancha.setEstado(EstadoCancha.ACTIVA);
         cancha.setComplejo(complejo);
+        cancha.setDisponible(true);
 
         return canchaRepository.save(cancha);
     }

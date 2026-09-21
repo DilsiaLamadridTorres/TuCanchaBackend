@@ -14,9 +14,8 @@ public class Usuario {
     private Long id;
 
     private String nombre;
-    private String email;
     private String password;
-    private String cedula;
+    private String telefono;
     private String correo;
     private boolean estado;
     private LocalDateTime fechaRegistro;
@@ -25,6 +24,10 @@ public class Usuario {
     private RolUsuario rol;
 
     public Usuario ( ) {
+    }
+    @PrePersist
+    public void asignarFechaRegistro() {
+        this.fechaRegistro = LocalDateTime.now();
     }
 
     public Long getId ( ) {
@@ -43,14 +46,6 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getEmail ( ) {
-        return email;
-    }
-
-    public void setEmail (String email) {
-        this.email = email;
-    }
-
     public String getPassword ( ) {
         return password;
     }
@@ -59,12 +54,12 @@ public class Usuario {
         this.password = password;
     }
 
-    public String getCedula ( ) {
-        return cedula;
+    public String getTelefono( ) {
+        return telefono;
     }
 
-    public void setCedula (String cedula) {
-        this.cedula = cedula;
+    public void setTelefono (String telefono) {
+        this.telefono = telefono;
     }
 
     public String getCorreo ( ) {

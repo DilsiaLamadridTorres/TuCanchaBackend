@@ -2,7 +2,7 @@ package com.generation.tucancha.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,84 +14,85 @@ public class TitularComplejo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nombre;
-    private String apellido;
-    @Column(nullable = false)
-    private String cedula;
-    private String correo;
-    private String telefono;
-    @Column(nullable = false)
-    private LocalDate fechaRegistro;
+    private String nombreTitular;
 
-    @OneToMany(mappedBy = "titularComplejo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private String cedulaTitular;
+
+    private String correoTitular;
+
+    private String telefonoTitular;
+
+    @Column(nullable = false)
+    private LocalDateTime fechaRegistro;
+
+    @OneToMany(
+            mappedBy = "titularComplejo",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
     private List<Complejo> complejos = new ArrayList<>();
 
     public TitularComplejo() {
     }
 
-    public TitularComplejo(String nombre, String apellido, String cedula, String correo, String telefono, LocalDate fechaRegistro) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.cedula = cedula;
-        this.correo = correo;
-        this.telefono = telefono;
-        this.fechaRegistro = fechaRegistro;
+    public TitularComplejo(
+            String nombreTitular,
+            String cedulaTitular,
+            String correoTitular,
+            String telefonoTitular) {
+
+        this.nombreTitular = nombreTitular;
+        this.cedulaTitular = cedulaTitular;
+        this.correoTitular = correoTitular;
+        this.telefonoTitular = telefonoTitular;
+    }
+
+    @PrePersist
+    public void asignarFechaRegistro() {
+        this.fechaRegistro = LocalDateTime.now();
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreTitular() {
+        return nombreTitular;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreTitular(String nombreTitular) {
+        this.nombreTitular = nombreTitular;
     }
 
-
-    public String getApellido() {
-        return apellido;
+    public String getCedulaTitular() {
+        return cedulaTitular;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setCedulaTitular(String cedulaTitular) {
+        this.cedulaTitular = cedulaTitular;
     }
 
-
-    public String getCedula() {
-        return cedula;
+    public String getCorreoTitular() {
+        return correoTitular;
     }
 
-    public void setCedula(String cedula) {
-        this.cedula = cedula;
+    public void setCorreoTitular(String correoTitular) {
+        this.correoTitular = correoTitular;
     }
 
-
-    public String getCorreo() {
-        return correo;
+    public String getTelefonoTitular() {
+        return telefonoTitular;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setTelefonoTitular(String telefonoTitular) {
+        this.telefonoTitular = telefonoTitular;
     }
 
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-
-    public LocalDate getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 

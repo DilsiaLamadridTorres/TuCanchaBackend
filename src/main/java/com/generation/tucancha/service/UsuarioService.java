@@ -1,7 +1,7 @@
 package com.generation.tucancha.service;
 
-import com.generation.tucancha.dto.request.UsuarioRequest;
-import com.generation.tucancha.dto.response.UsuarioResponse;
+import com.generation.tucancha.dto.request.UsuarioRequestDTO;
+import com.generation.tucancha.dto.response.UsuarioResponseDTO;
 import com.generation.tucancha.dto.resumen.UsuarioResumenDTO;
 import com.generation.tucancha.model.enums.RolUsuario;
 import com.generation.tucancha.model.entity.Usuario;
@@ -33,29 +33,24 @@ public class UsuarioService {
     }
 
     // Devuelve respuesta completa por ID
-    public Optional<UsuarioResponse> obtenerPorId(Long id) {
+    public Optional<UsuarioResponseDTO> obtenerPorId(Long id) {
         return usuarioRepository.findById(id)
                 .map(this::convertirAResponse);
     }
 
     // Guarda a partir de un UsuarioRequest y retorna UsuarioResponse
-    public UsuarioResponse guardar(UsuarioRequest request) {
-        if (usuarioRepository.existsByCorreo(request.getCorreo())) {
-            throw new IllegalArgumentException("El correo " + request.getCorreo() + " ya está registrado.");
+    public UsuarioResponseDTO guardar(UsuarioRequestDTO request) {
+        if (usuarioRepository.existsByCorreo(request.correo())) {
+            throw new IllegalArgumentException("El correo " + request.correo() + " ya está registrado.");
         }
 
         Usuario usuario = new Usuario();
-        usuario.setNombre(request.getNombre());
-        usuario.setCedula(request.getCedula());
-        usuario.setCorreo(request.getCorreo());
-        usuario.setPassword(passwordEncoder.encode(request.getPassword()));
-        usuario.setEstado(true);
-
-        if (request.getRol() == null) {
-            usuario.setRol(RolUsuario.JUGADOR);
-        } else {
-            usuario.setRol(request.getRol());
-        }
+        usuario.setNombre(request.nombre());
+        usuario.setTelefono(request.telefono());
+        usuario.setCorreo(request.correo());
+        usuario.setPassword(passwordEncoder.encode(request.password()));
+        usuario.setEstado(request.estado());
+        usuario.setRol(RolUsuario.JUGADOR);
 
         Usuario guardado = usuarioRepository.save(usuario);
         return convertirAResponse(guardado);
@@ -66,14 +61,11 @@ public class UsuarioService {
     }
 
     // Métodos privados de mapeo
-    private UsuarioResponse convertirAResponse(Usuario usuario) {
-        return new UsuarioResponse(
+    private UsuarioResponseDTO convertirAResponse(Usuario usuario) {
+        return new UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getNombre(),
-                usuario.getCedula(),
                 usuario.getCorreo(),
-                usuario.isEstado(),
-                usuario.getFechaRegistro(),
                 usuario.getRol()
         );
     }

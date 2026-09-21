@@ -1,15 +1,16 @@
 package com.generation.tucancha.controller;
 
-import com.generation.tucancha.dto.request.ComplejoRequest;
-import com.generation.tucancha.dto.response.ComplejoResponse;
+import com.generation.tucancha.dto.request.ComplejoRequestDTO;
+import com.generation.tucancha.dto.response.ComplejoResponseDTO;
 import com.generation.tucancha.service.ComplejoService;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/complejos")
+@RequestMapping("/api/complejos")
+@CrossOrigin(origins = "*")
 public class ComplejoController {
 
     private final ComplejoService complejoService;
@@ -18,39 +19,42 @@ public class ComplejoController {
         this.complejoService = complejoService;
     }
 
+    // ==========================================
+    // POST - CREAR COMPLEJO
+    // ==========================================
+
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public ComplejoResponse crear(
-            @RequestBody ComplejoRequest request
-    ) {
-        return complejoService.crear(request);
+    public ResponseEntity<ComplejoResponseDTO> crearComplejo(
+            @RequestBody ComplejoRequestDTO request) {
+
+        ComplejoResponseDTO response =
+                complejoService.crearComplejo(request);
+
+        return ResponseEntity.ok(response);
     }
+
+    // ==========================================
+    // GET - TODOS LOS COMPLEJOS
+    // ==========================================
 
     @GetMapping
-    public List<ComplejoResponse> obtenerTodos() {
-        return complejoService.obtenerTodos();
+    public ResponseEntity<List<ComplejoResponseDTO>> obtenerTodos() {
+
+        return ResponseEntity.ok(
+                complejoService.obtenerTodos()
+        );
     }
+
+    // ==========================================
+    // GET - COMPLEJO POR ID
+    // ==========================================
 
     @GetMapping("/{id}")
-    public ComplejoResponse obtenerPorId(
-            @PathVariable Long id
-    ) {
-        return complejoService.obtenerPorId(id);
-    }
+    public ResponseEntity<ComplejoResponseDTO> obtenerPorId(
+            @PathVariable Long id) {
 
-    @PutMapping("/{id}")
-    public ComplejoResponse actualizar(
-            @PathVariable Long id,
-            @RequestBody ComplejoRequest request
-    ) {
-        return complejoService.actualizar(id, request);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(
-            @PathVariable Long id
-    ) {
-        complejoService.eliminar(id);
+        return ResponseEntity.ok(
+                complejoService.obtenerPorId(id)
+        );
     }
 }

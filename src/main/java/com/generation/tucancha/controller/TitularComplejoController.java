@@ -3,56 +3,66 @@ package com.generation.tucancha.controller;
 import com.generation.tucancha.dto.request.TitularComplejoRequest;
 import com.generation.tucancha.dto.response.TitularComplejoResponse;
 import com.generation.tucancha.service.TitularComplejoService;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/titulares")
+@RequestMapping("/api/titulares")
+@CrossOrigin(origins = "*")
 public class TitularComplejoController {
 
     private final TitularComplejoService titularComplejoService;
 
     public TitularComplejoController(
-            TitularComplejoService titularComplejoService
-    ) {
+            TitularComplejoService titularComplejoService) {
+
         this.titularComplejoService = titularComplejoService;
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public TitularComplejoResponse crear(
-            @RequestBody TitularComplejoRequest request
-    ) {
-        return titularComplejoService.crear(request);
+    public ResponseEntity<TitularComplejoResponse> crear(
+            @RequestBody TitularComplejoRequest request) {
+
+        return ResponseEntity.ok(
+                titularComplejoService.crear(request)
+        );
     }
 
     @GetMapping
-    public List<TitularComplejoResponse> obtenerTodos() {
-        return titularComplejoService.obtenerTodos();
+    public ResponseEntity<List<TitularComplejoResponse>> obtenerTodos() {
+
+        return ResponseEntity.ok(
+                titularComplejoService.obtenerTodos()
+        );
     }
 
     @GetMapping("/{id}")
-    public TitularComplejoResponse obtenerPorId(
-            @PathVariable Long id
-    ) {
-        return titularComplejoService.obtenerPorId(id);
+    public ResponseEntity<TitularComplejoResponse> obtenerPorId(
+            @PathVariable Long id) {
+
+        return ResponseEntity.ok(
+                titularComplejoService.obtenerPorId(id)
+        );
     }
 
     @PutMapping("/{id}")
-    public TitularComplejoResponse actualizar(
+    public ResponseEntity<TitularComplejoResponse> actualizar(
             @PathVariable Long id,
-            @RequestBody TitularComplejoRequest request
-    ) {
-        return titularComplejoService.actualizar(id, request);
+            @RequestBody TitularComplejoRequest request) {
+
+        return ResponseEntity.ok(
+                titularComplejoService.actualizar(id, request)
+        );
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void eliminar(
-            @PathVariable Long id
-    ) {
+    public ResponseEntity<Void> eliminar(
+            @PathVariable Long id) {
+
         titularComplejoService.eliminar(id);
+
+        return ResponseEntity.noContent().build();
     }
 }
