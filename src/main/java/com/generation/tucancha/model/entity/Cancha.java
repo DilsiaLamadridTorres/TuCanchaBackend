@@ -161,6 +161,14 @@ public class Cancha {
        GETTERS Y SETTERS
        ========================================================= */
 
+    public Long getId() {
+        return idCancha;
+    }
+
+    public void setId(Long idCancha) {
+        this.idCancha = idCancha;
+    }
+
     public Long getIdCancha() {
         return idCancha;
     }
@@ -305,5 +313,30 @@ public class Cancha {
 
     public void setEstado(EstadoCancha estado) {
         this.estado = estado;
+    }
+
+
+    public String getDescripcion() {
+        return otrosDeportes;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.otrosDeportes = descripcion;
+    }
+
+    public BigDecimal getPrecioPorHora() {
+        return precioHora;
+    }
+
+    public void setPrecioPorHora(BigDecimal precioPorHora) {
+        this.precioHora = precioPorHora;
+    }
+
+    public boolean isDisponible() {
+        return this.estado == EstadoCancha.ACTIVA;
+    }
+
+    public void setDisponible(boolean disponible) {
+        this.estado = disponible ? EstadoCancha.ACTIVA : EstadoCancha.INACTIVA;
     }
 }

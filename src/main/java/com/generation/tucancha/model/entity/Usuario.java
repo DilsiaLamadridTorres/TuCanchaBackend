@@ -93,4 +93,8 @@ public class Usuario {
     public void setRol (RolUsuario rol) {
         this.rol = rol;
     }
+
+    public String getUsername() {
+        return correo != null ? correo : email;
+    }
 }
