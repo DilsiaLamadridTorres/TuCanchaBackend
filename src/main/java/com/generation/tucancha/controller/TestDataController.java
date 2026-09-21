@@ -81,7 +81,16 @@ public class TestDataController {
         cancha.setPrecioHora(new BigDecimal(precioNum.toString()));
         cancha.setDuracionMinutos(((Number) body.getOrDefault("duracionMinutos", 60)).intValue());
         cancha.setTechada(Boolean.TRUE.equals(body.getOrDefault("techada", true)));
-        cancha.setOtrosDeportes((String) body.getOrDefault("otrosDeportes", null));
+        Object otrosObj = body.get("otrosDeportes");
+        Boolean otros = false;
+        if (otrosObj instanceof Boolean) {
+            otros = (Boolean) otrosObj;
+        } else if (otrosObj instanceof String) {
+            otros = Boolean.parseBoolean((String) otrosObj);
+        } else if (otrosObj instanceof Number) {
+            otros = ((Number) otrosObj).intValue() != 0;
+        }
+        cancha.setOtrosDeportes(otros);
         cancha.setEstado(EstadoCancha.ACTIVA);
 
         return canchaRepository.save(cancha);
