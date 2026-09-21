@@ -24,6 +24,8 @@ public class Complejo {
     private String ciudad;
     @Column
     private String direccion;
+    @Column
+    private String telefonoComplejo;
 
     // Relaciones con otras entidades
 
@@ -105,6 +107,14 @@ public Complejo(String nombreComplejo, String nit, String provincia, String ciud
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getTelefonoComplejo() {
+        return telefonoComplejo;
+    }
+
+    public void setTelefonoComplejo(String telefonoComplejo) {
+        this.telefonoComplejo = telefonoComplejo;
     }
 
     public TitularComplejo getTitularComplejo() {
